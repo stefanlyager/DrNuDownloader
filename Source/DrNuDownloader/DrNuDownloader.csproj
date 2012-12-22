@@ -52,6 +52,7 @@
     <Compile Include="DrNuClient.cs" />
     <Compile Include="Episode.cs" />
     <Compile Include="EpisodeListClient.cs" />
+    <Compile Include="HtmlParseException.cs" />
     <Compile Include="ProgramClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

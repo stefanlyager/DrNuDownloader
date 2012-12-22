@@ -15,7 +15,7 @@ namespace DrNuDownloader.Console
 
             foreach (var episode in episodes)
             {
-                System.Console.WriteLine("This is an episode...");
+                System.Console.WriteLine(episode.Uri);
             }
 
             System.Console.ReadLine();
