@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrNuDownloader", "DrNuDownloader\DrNuDownloader.csproj", "{296E1543-3011-4074-9717-E51C45E9EC40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrNuDownloader.Tests", "DrNuDownloader.Tests\DrNuDownloader.Tests.csproj", "{8B17D8A1-2680-407B-9C5F-53ADEF8E79AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrNuDownloader.Console", "DrNuDownloader.Console\DrNuDownloader.Console.csproj", "{B1C17786-BD17-4C68-9003-FA2738C634B5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{296E1543-3011-4074-9717-E51C45E9EC40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{296E1543-3011-4074-9717-E51C45E9EC40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{296E1543-3011-4074-9717-E51C45E9EC40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{296E1543-3011-4074-9717-E51C45E9EC40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B17D8A1-2680-407B-9C5F-53ADEF8E79AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B17D8A1-2680-407B-9C5F-53ADEF8E79AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B17D8A1-2680-407B-9C5F-53ADEF8E79AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B17D8A1-2680-407B-9C5F-53ADEF8E79AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1C17786-BD17-4C68-9003-FA2738C634B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1C17786-BD17-4C68-9003-FA2738C634B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1C17786-BD17-4C68-9003-FA2738C634B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1C17786-BD17-4C68-9003-FA2738C634B5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
