@@ -7,6 +7,7 @@ namespace DrNuDownloader
     {
         IEnumerable<Episode> GetEpisodes(Uri programUri);
         void Download(Episode episode);
+        void Download(Uri episodeUri);
     }
 
     public class DrNuClient : IDrNuClient
@@ -32,6 +33,13 @@ namespace DrNuDownloader
 
             var programId = _programClient.GetId(programUri);
             return _episodeListClient.GetEpisodes(programId);
+        }
+
+        public void Download(Uri episodeUri)
+        {
+            if (episodeUri == null) throw new ArgumentNullException("episodeUri");
+
+            _episodeClient.Download(episodeUri);
         }
 
         public void Download(Episode episode)

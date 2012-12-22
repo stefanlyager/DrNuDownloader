@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 
@@ -8,24 +9,38 @@ namespace DrNuDownloader
     public interface IEpisodeClient
     {
         void Download(Episode episode);
+        void Download(Uri episodeUri);
     }
 
     public class EpisodeClient : IEpisodeClient
     {
         private readonly IResourceClient _resourceClient;
+        private readonly IRtmpDump _rtmpDump;
+        private readonly IFileNameSanitizer _fileNameSanitizer;
 
-        public EpisodeClient(IResourceClient resourceClient)
+        public EpisodeClient(IResourceClient resourceClient, IRtmpDump rtmpDump, IFileNameSanitizer fileNameSanitizer)
         {
             if (resourceClient == null) throw new ArgumentNullException("resourceClient");
+            if (rtmpDump == null) throw new ArgumentNullException("rtmpDump");
+            if (fileNameSanitizer == null) throw new ArgumentNullException("fileNameSanitizer");
 
             _resourceClient = resourceClient;
+            _rtmpDump = rtmpDump;
+            _fileNameSanitizer = fileNameSanitizer;
         }
 
         public void Download(Episode episode)
         {
             if (episode == null) throw new ArgumentNullException("episode");
 
-            var request = WebRequest.CreateHttp(episode.Uri);
+            Download(episode.Uri);
+        }
+
+        public void Download(Uri episodeUri)
+        {
+            if (episodeUri == null) throw new ArgumentNullException("episodeUri");
+
+            var request = WebRequest.CreateHttp(episodeUri);
             var response = request.GetResponse();
 
             var streamReader = new StreamReader(response.GetResponseStream());
@@ -35,12 +50,18 @@ namespace DrNuDownloader
             var match = regex.Match(html);
             if (!match.Success)
             {
-                throw new HtmlParseException("Unable to find resource.");
+                throw new ParseException("Unable to find resource.");
             }
 
             var resourceUri = new Uri(match.Groups["uri"].Value);
+            var resource = _resourceClient.GetResource(resourceUri);
 
-            var rtmpUri = _resourceClient.GetRtmpUri(resourceUri);
+            var link = resource.links.OrderByDescending(l => l.bitrateKbps).First();
+            var rtmpUri = new Uri(link.uri);
+
+            var fileName = _fileNameSanitizer.Sanitize(string.Format("{0}.flv", resource.postingTitle));
+
+            _rtmpDump.Download(rtmpUri, fileName);
         }
     }
 }

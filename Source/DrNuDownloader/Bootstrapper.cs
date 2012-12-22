@@ -14,6 +14,8 @@ namespace DrNuDownloader
             containerBuilder.RegisterType<EpisodeListClient>().As<IEpisodeListClient>();
             containerBuilder.RegisterType<EpisodeClient>().As<IEpisodeClient>();
             containerBuilder.RegisterType<ResourceClient>().As<IResourceClient>();
+            containerBuilder.RegisterType<RtmpDump>().As<IRtmpDump>();
+            containerBuilder.RegisterType<FileNameSanitizer>().As<IFileNameSanitizer>();
             Container = containerBuilder.Build();
         }
     }

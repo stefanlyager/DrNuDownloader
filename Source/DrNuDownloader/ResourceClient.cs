@@ -9,12 +9,12 @@ namespace DrNuDownloader
 {
     public interface IResourceClient
     {
-        Uri GetRtmpUri(Uri resourceUri);
+        Resource GetResource(Uri resourceUri);
     }
 
     public class ResourceClient : IResourceClient
     {
-        public Uri GetRtmpUri(Uri resourceUri)
+        public Resource GetResource(Uri resourceUri)
         {
             if (resourceUri == null) throw new ArgumentNullException("resourceUri");
 
@@ -27,9 +27,7 @@ namespace DrNuDownloader
                 json = streamReader.ReadToEnd();
             }
 
-            var resource = JsonConvert.DeserializeObject<Resource>(json);
-            var link = resource.links.OrderByDescending(l => l.bitrateKbps).First();
-            return new Uri(link.uri);
+            return JsonConvert.DeserializeObject<Resource>(json);
         }
     }
 }

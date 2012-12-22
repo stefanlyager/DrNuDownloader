@@ -27,7 +27,7 @@ namespace DrNuDownloader
             var containerArticleElement = htmlDocument.GetElementbyId(programId);
             if (containerArticleElement == null)
             {
-                throw new HtmlParseException(string.Format("Unable to find element with id {0}", programId));
+                throw new ParseException(string.Format("Unable to find element with id {0}", programId));
             }
 
             var containerSectionElement = (from se in containerArticleElement.ChildNodes
@@ -35,7 +35,7 @@ namespace DrNuDownloader
                                            select se).FirstOrDefault();
             if (containerSectionElement == null)
             {
-                throw new HtmlParseException("Unable to find section element.");
+                throw new ParseException("Unable to find section element.");
             }
 
             var articleElements = (from ae in containerSectionElement.ChildNodes

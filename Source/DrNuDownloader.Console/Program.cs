@@ -18,11 +18,8 @@ namespace DrNuDownloader.Console
             //    System.Console.WriteLine(episode.Uri);
             //}
 
-            var episode = new Episode
-                              {
-                                  Uri = new Uri("http://www.dr.dk/tv/se/matador/matador-16-24")
-                              };
-            drNuClient.Download(episode);
+            var uri = new Uri("http://www.dr.dk/TV/se/matador/matador-18-24");
+            drNuClient.Download(uri);
 
             System.Console.ReadLine();
         }
