@@ -12,6 +12,8 @@ namespace DrNuDownloader
             containerBuilder.RegisterType<DrNuClient>().As<IDrNuClient>();
             containerBuilder.RegisterType<ProgramClient>().As<IProgramClient>();
             containerBuilder.RegisterType<EpisodeListClient>().As<IEpisodeListClient>();
+            containerBuilder.RegisterType<EpisodeClient>().As<IEpisodeClient>();
+            containerBuilder.RegisterType<ResourceClient>().As<IResourceClient>();
             Container = containerBuilder.Build();
         }
     }
