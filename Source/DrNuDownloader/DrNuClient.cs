@@ -3,12 +3,17 @@ using System.Collections.Generic;
 
 namespace DrNuDownloader
 {
-    public class DrNuClient
+    public interface IDrNuClient
     {
-        private readonly ProgramClient _programClient;
-        private readonly EpisodeListClient _episodeListClient;
+        IEnumerable<Episode> GetEpisodes(Uri programUri);
+    }
 
-        public DrNuClient(ProgramClient programClient, EpisodeListClient episodeListClient)
+    public class DrNuClient : IDrNuClient
+    {
+        private readonly IProgramClient _programClient;
+        private readonly IEpisodeListClient _episodeListClient;
+
+        public DrNuClient(IProgramClient programClient, IEpisodeListClient episodeListClient)
         {
             if (programClient == null) throw new ArgumentNullException("programClient");
             if (episodeListClient == null) throw new ArgumentNullException("episodeListClient");

@@ -4,7 +4,12 @@ using HtmlAgilityPack;
 
 namespace DrNuDownloader
 {
-    public class ProgramClient
+    public interface IProgramClient
+    {
+        string GetId(Uri programUri);
+    }
+
+    public class ProgramClient : IProgramClient
     {
         public string GetId(Uri programUri)
         {

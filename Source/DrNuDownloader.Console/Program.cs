@@ -1,4 +1,5 @@
 ﻿using System;
+using Autofac;
 
 namespace DrNuDownloader.Console
 {
@@ -6,7 +7,10 @@ namespace DrNuDownloader.Console
     {
         public static void Main(string[] args)
         {
-            var drNuClient = new DrNuClient(new ProgramClient(), new EpisodeListClient());
+            var bootstrapper = new Bootstrapper();
+            bootstrapper.Initialize();
+
+            var drNuClient = bootstrapper.Container.Resolve<IDrNuClient>();
             var episodes = drNuClient.GetEpisodes(new Uri("http://www.dr.dk/tv/program/matador"));
 
             foreach (var episode in episodes)

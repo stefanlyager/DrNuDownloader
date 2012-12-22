@@ -3,7 +3,12 @@ using System.Collections.Generic;
 
 namespace DrNuDownloader
 {
-    public class EpisodeListClient
+    public interface IEpisodeListClient
+    {
+        IEnumerable<Episode> GetEpisodes(string programId);
+    }
+
+    public class EpisodeListClient : IEpisodeListClient
     {
         public IEnumerable<Episode> GetEpisodes(string programId)
         {
