@@ -1,5 +1,4 @@
-﻿using System;
-using Autofac;
+﻿using Autofac;
 
 namespace DrNuDownloader.Console
 {
@@ -11,15 +10,32 @@ namespace DrNuDownloader.Console
             bootstrapper.Initialize();
 
             var drNuClient = bootstrapper.Container.Resolve<IDrNuClient>();
-            //var episodes = drNuClient.GetEpisodes(new Uri("http://www.dr.dk/tv/program/matador"));
 
-            //foreach (var episode in episodes)
-            //{
-            //    System.Console.WriteLine(episode.Uri);
-            //}
-
-            var uri = new Uri("http://www.dr.dk/TV/se/matador/matador-18-24");
-            drNuClient.Download(uri);
+            var arguments = Args.Configuration.Configure<Arguments>().CreateAndBind(args);
+            if (arguments.l != null)
+            {
+                var episodes = drNuClient.GetEpisodes(arguments.l);
+                foreach (var episode in episodes)
+                {
+                    System.Console.WriteLine(episode.Uri);
+                }
+            }
+            else if (arguments.d != null)
+            {
+                drNuClient.Download(arguments.d);
+            }
+            else if (arguments.da != null)
+            {
+                var episodes = drNuClient.GetEpisodes(arguments.da);
+                foreach (var episode in episodes)
+                {
+                    drNuClient.Download(episode.Uri);
+                }
+            }
+            else
+            {
+                System.Console.WriteLine("Invalid argument.");
+            }
 
             System.Console.ReadLine();
         }
