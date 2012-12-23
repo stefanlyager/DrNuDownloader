@@ -12,32 +12,30 @@ namespace DrNuDownloader.Console
             var drNuClient = bootstrapper.Container.Resolve<IDrNuClient>();
 
             var arguments = Args.Configuration.Configure<Arguments>().CreateAndBind(args);
-            if (arguments.l != null)
+            if (arguments.ListUri != null)
             {
-                var episodes = drNuClient.GetEpisodes(arguments.l);
-                foreach (var episode in episodes)
+                var episodeUris = drNuClient.GetEpisodeUris(arguments.ListUri);
+                foreach (var uri in episodeUris)
                 {
-                    System.Console.WriteLine(episode.Uri);
+                    System.Console.WriteLine(uri);
                 }
             }
-            else if (arguments.d != null)
+            else if (arguments.DownloadUri != null)
             {
-                drNuClient.Download(arguments.d);
+                drNuClient.Download(arguments.DownloadUri);
             }
-            else if (arguments.da != null)
+            else if (arguments.DownloadAllUri != null)
             {
-                var episodes = drNuClient.GetEpisodes(arguments.da);
-                foreach (var episode in episodes)
+                var episodeUris = drNuClient.GetEpisodeUris(arguments.DownloadAllUri);
+                foreach (var uri in episodeUris)
                 {
-                    drNuClient.Download(episode.Uri);
+                    drNuClient.Download(uri);
                 }
             }
             else
             {
                 System.Console.WriteLine("Invalid argument.");
             }
-
-            System.Console.ReadLine();
         }
     }
 }

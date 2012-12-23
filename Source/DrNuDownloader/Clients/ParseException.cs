@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace DrNuDownloader
+namespace DrNuDownloader.Clients
 {
     [Serializable]
     public class ParseException : Exception

@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using DrNuDownloader.Clients;
+using DrNuDownloader.Util;
 
 namespace DrNuDownloader
 {

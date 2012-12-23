@@ -4,16 +4,16 @@ using System.Linq;
 using System.Net;
 using HtmlAgilityPack;
 
-namespace DrNuDownloader
+namespace DrNuDownloader.Clients
 {
     public interface IEpisodeListClient
     {
-        IEnumerable<Episode> GetEpisodes(string programId);
+        IEnumerable<Uri> GetEpisodeUris(string programId);
     }
 
     public class EpisodeListClient : IEpisodeListClient
     {
-        public IEnumerable<Episode> GetEpisodes(string programId)
+        public IEnumerable<Uri> GetEpisodeUris(string programId)
         {
             if (programId == null) throw new ArgumentNullException("programId");
 
@@ -51,11 +51,7 @@ namespace DrNuDownloader
                     continue;
                 }
 
-                var episodeUri = new Uri(string.Format("http://www.dr.dk{0}", aElement.Attributes["href"].Value));
-                yield return new Episode
-                                 {
-                                     Uri = episodeUri
-                                 };
+                yield return new Uri(string.Format("http://www.dr.dk{0}", aElement.Attributes["href"].Value));
             }
         }
     }

@@ -2,7 +2,7 @@
 using System.Net;
 using HtmlAgilityPack;
 
-namespace DrNuDownloader
+namespace DrNuDownloader.Clients
 {
     public interface IProgramClient
     {

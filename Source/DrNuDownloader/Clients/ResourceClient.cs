@@ -1,11 +1,10 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Net;
 using DrNuDownloader.Json;
 using Newtonsoft.Json;
 
-namespace DrNuDownloader
+namespace DrNuDownloader.Clients
 {
     public interface IResourceClient
     {

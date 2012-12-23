@@ -56,17 +56,16 @@
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="DrNuClient.cs" />
-    <Compile Include="Episode.cs" />
-    <Compile Include="EpisodeClient.cs" />
-    <Compile Include="EpisodeListClient.cs" />
-    <Compile Include="FileNameSanitizer.cs" />
-    <Compile Include="ParseException.cs" />
+    <Compile Include="Clients\EpisodeClient.cs" />
+    <Compile Include="Clients\EpisodeListClient.cs" />
+    <Compile Include="Util\FileNameSanitizer.cs" />
+    <Compile Include="Clients\ParseException.cs" />
     <Compile Include="Json\Link.cs" />
     <Compile Include="Json\Resource.cs" />
-    <Compile Include="ProgramClient.cs" />
+    <Compile Include="Clients\ProgramClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResourceClient.cs" />
-    <Compile Include="RtmpDump.cs" />
+    <Compile Include="Clients\ResourceClient.cs" />
+    <Compile Include="Util\RtmpDump.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

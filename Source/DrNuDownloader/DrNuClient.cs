@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using DrNuDownloader.Clients;
 
 namespace DrNuDownloader
 {
     public interface IDrNuClient
     {
-        IEnumerable<Episode> GetEpisodes(Uri programUri);
-        void Download(Episode episode);
+        IEnumerable<Uri> GetEpisodeUris(Uri programUri);
         void Download(Uri episodeUri);
     }
 
@@ -27,12 +27,12 @@ namespace DrNuDownloader
             _episodeClient = episodeClient;
         }
 
-        public IEnumerable<Episode> GetEpisodes(Uri programUri)
+        public IEnumerable<Uri> GetEpisodeUris(Uri programUri)
         {
             if (programUri == null) throw new ArgumentNullException("programUri");
 
             var programId = _programClient.GetId(programUri);
-            return _episodeListClient.GetEpisodes(programId);
+            return _episodeListClient.GetEpisodeUris(programId);
         }
 
         public void Download(Uri episodeUri)
@@ -40,13 +40,6 @@ namespace DrNuDownloader
             if (episodeUri == null) throw new ArgumentNullException("episodeUri");
 
             _episodeClient.Download(episodeUri);
-        }
-
-        public void Download(Episode episode)
-        {
-            if (episode == null) throw new ArgumentNullException("episode");
-
-            _episodeClient.Download(episode);
         }
     }
 }

@@ -3,12 +3,12 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using DrNuDownloader.Util;
 
-namespace DrNuDownloader
+namespace DrNuDownloader.Clients
 {
     public interface IEpisodeClient
     {
-        void Download(Episode episode);
         void Download(Uri episodeUri);
     }
 
@@ -27,13 +27,6 @@ namespace DrNuDownloader
             _resourceClient = resourceClient;
             _rtmpDump = rtmpDump;
             _fileNameSanitizer = fileNameSanitizer;
-        }
-
-        public void Download(Episode episode)
-        {
-            if (episode == null) throw new ArgumentNullException("episode");
-
-            Download(episode.Uri);
         }
 
         public void Download(Uri episodeUri)
