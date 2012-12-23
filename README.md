@@ -1,4 +1,4 @@
-# DrNuDownloader
+# DR NU Downloader
 
 A console application for downloading episodes from DR NU (http://www.dr.dk/tv/).
 
@@ -24,7 +24,7 @@ Lists all episodes of Matador.
 
     DrNuDownloader.Console.exe /d http://www.dr.dk/tv/se/matador/matador-18-24
 
-Will download episode 18 of the series Matador.
+Will download episode 18 of Matador.
 
 ### Download all episodes
 

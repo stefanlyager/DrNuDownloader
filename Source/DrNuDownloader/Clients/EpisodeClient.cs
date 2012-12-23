@@ -49,10 +49,10 @@ namespace DrNuDownloader.Clients
             var resourceUri = new Uri(match.Groups["uri"].Value);
             var resource = _resourceClient.GetResource(resourceUri);
 
-            var link = resource.links.OrderByDescending(l => l.bitrateKbps).First();
-            var rtmpUri = new Uri(link.uri);
+            var link = resource.Links.OrderByDescending(l => l.BitrateInKbps).First();
+            var rtmpUri = new Uri(link.Uri);
 
-            var fileName = _fileNameSanitizer.Sanitize(string.Format("{0}.flv", resource.postingTitle));
+            var fileName = _fileNameSanitizer.Sanitize(string.Format("{0}.flv", resource.PostingTitle));
 
             _rtmpDump.Download(rtmpUri, fileName);
         }
