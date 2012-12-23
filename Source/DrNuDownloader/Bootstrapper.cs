@@ -1,6 +1,4 @@
 ﻿using Autofac;
-using DrNuDownloader.Clients;
-using DrNuDownloader.Util;
 
 namespace DrNuDownloader
 {
@@ -11,13 +9,8 @@ namespace DrNuDownloader
         public void Initialize()
         {
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterType<DrNuClient>().As<IDrNuClient>();
-            containerBuilder.RegisterType<ProgramClient>().As<IProgramClient>();
-            containerBuilder.RegisterType<EpisodeListClient>().As<IEpisodeListClient>();
-            containerBuilder.RegisterType<EpisodeClient>().As<IEpisodeClient>();
-            containerBuilder.RegisterType<ResourceClient>().As<IResourceClient>();
-            containerBuilder.RegisterType<RtmpDump>().As<IRtmpDump>();
-            containerBuilder.RegisterType<FileNameSanitizer>().As<IFileNameSanitizer>();
+            containerBuilder.RegisterAssemblyTypes(typeof(DrNuClient).Assembly)
+                            .AsImplementedInterfaces();
             Container = containerBuilder.Build();
         }
     }
