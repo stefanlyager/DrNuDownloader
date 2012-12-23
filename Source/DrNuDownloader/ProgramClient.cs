@@ -21,7 +21,8 @@ namespace DrNuDownloader
             var htmlDocument = new HtmlDocument();
             htmlDocument.Load(response.GetResponseStream());
 
-            var articleElement = htmlDocument.DocumentNode.SelectSingleNode("//article[@class='programSerieSpotContainer']");
+            var articleElement = htmlDocument.DocumentNode.SelectSingleNode("//article[@class='programSerieSpotContainer']") ??
+                                 htmlDocument.DocumentNode.SelectSingleNode("//article[@class='programSerieEpisodeChapterContainer']");
             return articleElement.Attributes["id"].Value;
         }
     }
