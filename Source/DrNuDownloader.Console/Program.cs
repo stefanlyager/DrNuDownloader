@@ -1,4 +1,7 @@
-﻿using Autofac;
+﻿using System;
+using Args;
+using Args.Help;
+using Autofac;
 
 namespace DrNuDownloader.Console
 {
@@ -11,31 +14,50 @@ namespace DrNuDownloader.Console
 
             var drNuClient = bootstrapper.Container.Resolve<IDrNuClient>();
 
-            var arguments = Args.Configuration.Configure<Arguments>().CreateAndBind(args);
-            if (arguments.ListUri != null)
+            var modelBindingDefinition = Configuration.Configure<Arguments>();
+            try
             {
-                var episodeUris = drNuClient.GetEpisodeUris(arguments.ListUri);
-                foreach (var uri in episodeUris)
+                var arguments = modelBindingDefinition.CreateAndBind(args);
+                if (arguments.ListUri != null)
                 {
-                    System.Console.WriteLine(uri);
+                    var episodeUris = drNuClient.GetEpisodeUris(arguments.ListUri);
+                    foreach (var uri in episodeUris)
+                    {
+                        System.Console.WriteLine(uri);
+                    }
+                }
+                else if (arguments.DownloadUri != null)
+                {
+                    drNuClient.Download(arguments.DownloadUri);
+                }
+                else if (arguments.DownloadAllUri != null)
+                {
+                    var episodeUris = drNuClient.GetEpisodeUris(arguments.DownloadAllUri);
+                    foreach (var uri in episodeUris)
+                    {
+                        drNuClient.Download(uri);
+                    }
+                }
+                else
+                {
+                    OutputHelpText(modelBindingDefinition);
                 }
             }
-            else if (arguments.DownloadUri != null)
+            catch (InvalidArgsFormatException)
             {
-                drNuClient.Download(arguments.DownloadUri);
+                OutputHelpText(modelBindingDefinition);
             }
-            else if (arguments.DownloadAllUri != null)
-            {
-                var episodeUris = drNuClient.GetEpisodeUris(arguments.DownloadAllUri);
-                foreach (var uri in episodeUris)
-                {
-                    drNuClient.Download(uri);
-                }
-            }
-            else
-            {
-                System.Console.WriteLine("Invalid argument.");
-            }
+        }
+
+        private static void OutputHelpText(IModelBindingDefinition<Arguments> modelBindingDefinition)
+        {
+            if (modelBindingDefinition == null) throw new ArgumentNullException("modelBindingDefinition");
+
+            var helpProvider = new HelpProvider();
+            var modelHelp = helpProvider.GenerateModelHelp(modelBindingDefinition);
+
+            var helpFormatter = new HelpFormatter();
+            helpFormatter.WriteHelp(modelHelp, System.Console.Out);
         }
     }
 }

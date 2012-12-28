@@ -4,18 +4,19 @@ using Args;
 
 namespace DrNuDownloader.Console
 {
+    [Description("Utility for downloading episodes from DR NU (http://www.dr.dk/tv).")]
     public class Arguments
     {
         [ArgsMemberSwitch("l")]
-        [Description("List all episode URIs from this URI.")]
+        [Description("List all episode URLs from this URL.")]
         public Uri ListUri { get; set; }
 
         [ArgsMemberSwitch("d")]
-        [Description("Download episode from this URI.")]
+        [Description("Download episode from this URL.")]
         public Uri DownloadUri { get; set; }
 
         [ArgsMemberSwitch("da")]
-        [Description("Download all episodes from this URI.")]
+        [Description("Download all episodes from this URL.")]
         public Uri DownloadAllUri { get; set; }
     }
 }
