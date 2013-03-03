@@ -2,16 +2,11 @@
 
 A console application for downloading episodes from DR NU (http://www.dr.dk/tv/).
 
-## Prerequisites
-
-1. Download RMPTDump from http://rtmpdump.mplayerhq.hu/.
-2. Make sure the folder containing RTMPDump is listed in your PATH environment variable.
-
 ## Usage
 
 ### List episodes
 
-    DrNuDownloader.Console.exe /l http://www.dr.dk/tv/program/matador
+    DrNuDownloader.Console.exe /l http://www.dr.dk/tv/se/matador/matador-22-24
 
 Lists all episodes of Matador.
 
@@ -28,6 +23,6 @@ Will download episode 18 of Matador.
 
 ### Download all episodes
 
-    DrNuDownloader.Console.exe /da http://www.dr.dk/tv/program/matador
+    DrNuDownloader.Console.exe /da http://www.dr.dk/tv/se/matador/matador-22-24
 
 Will download all episodes of Matador.
