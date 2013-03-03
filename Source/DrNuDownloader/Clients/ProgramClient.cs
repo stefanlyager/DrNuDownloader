@@ -1,29 +1,35 @@
 ﻿using System;
+using System.IO;
 using System.Net;
-using HtmlAgilityPack;
+using System.Text.RegularExpressions;
 
 namespace DrNuDownloader.Clients
 {
     public interface IProgramClient
     {
-        string GetId(Uri programUri);
+        string GetSlug(Uri programUri);
     }
 
     public class ProgramClient : IProgramClient
     {
-        public string GetId(Uri programUri)
+        public string GetSlug(Uri programUri)
         {
             if (programUri == null) throw new ArgumentNullException("programUri");
 
             var request = WebRequest.CreateHttp(programUri);
             var response = request.GetResponse();
 
-            var htmlDocument = new HtmlDocument();
-            htmlDocument.Load(response.GetResponseStream());
+            var streamReader = new StreamReader(response.GetResponseStream());
+            var html = streamReader.ReadToEnd();
 
-            var articleElement = htmlDocument.DocumentNode.SelectSingleNode("//article[@class='programSerieSpotContainer']") ??
-                                 htmlDocument.DocumentNode.SelectSingleNode("//article[@class='programSerieEpisodeChapterContainer']");
-            return articleElement.Attributes["id"].Value;
+            var regex = new Regex("programSerieSlug:\\s*\"(?<slug>.*)\"");
+            var match = regex.Match(html);
+            if (!match.Success)
+            {
+                throw new ParseException("Unable to find programSerieSlug.");
+            }
+
+            return match.Groups["slug"].Value;
         }
     }
 }

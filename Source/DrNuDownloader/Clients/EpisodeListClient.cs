@@ -8,42 +8,31 @@ namespace DrNuDownloader.Clients
 {
     public interface IEpisodeListClient
     {
-        IEnumerable<Uri> GetEpisodeUris(string programId);
+        IEnumerable<Uri> GetEpisodeUris(string slug);
     }
 
     public class EpisodeListClient : IEpisodeListClient
     {
-        public IEnumerable<Uri> GetEpisodeUris(string programId)
+        public IEnumerable<Uri> GetEpisodeUris(string slug)
         {
-            if (programId == null) throw new ArgumentNullException("programId");
+            if (slug == null) throw new ArgumentNullException("slug");
 
-            var episodesUri = new Uri(string.Format("http://www.dr.dk/TV/se/episode/gallery/?programSeriesUrn={0}&mediaType=tv&skip=0&take=100", programId));
+            var episodesUri = new Uri(string.Format("http://www.dr.dk/TV/play/AllEpisodes?slug={0}&episodesperpage=100&pagenumber=1", slug));
             var request = WebRequest.CreateHttp(episodesUri);
             var response = request.GetResponse();
 
             var htmlDocument = new HtmlDocument();
             htmlDocument.Load(response.GetResponseStream());
 
-            var containerArticleElement = htmlDocument.GetElementbyId(programId);
-            if (containerArticleElement == null)
+            var liElements = htmlDocument.DocumentNode.SelectNodes("//li");
+            if (liElements == null)
             {
-                throw new ParseException(string.Format("Unable to find element with id {0}", programId));
+                throw new ParseException("Unable to find li elements.");
             }
 
-            var containerSectionElement = (from se in containerArticleElement.ChildNodes
-                                           where se.Name == "section"
-                                           select se).FirstOrDefault();
-            if (containerSectionElement == null)
+            foreach (var liElement in liElements)
             {
-                throw new ParseException("Unable to find section element.");
-            }
-
-            var articleElements = (from ae in containerSectionElement.ChildNodes
-                                   where ae.Name == "article"
-                                   select ae);
-            foreach (var article in articleElements)
-            {
-                var aElement = (from ae in article.ChildNodes
+                var aElement = (from ae in liElement.ChildNodes
                                 where ae.Name == "a"
                                 select ae).FirstOrDefault();
                 if (aElement == null)

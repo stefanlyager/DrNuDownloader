@@ -31,8 +31,8 @@ namespace DrNuDownloader
         {
             if (programUri == null) throw new ArgumentNullException("programUri");
 
-            var programId = _programClient.GetId(programUri);
-            return _episodeListClient.GetEpisodeUris(programId);
+            var slug = _programClient.GetSlug(programUri);
+            return _episodeListClient.GetEpisodeUris(slug);
         }
 
         public void Download(Uri episodeUri)

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace DrNuDownloader.Util
+namespace DrNuDownloader
 {
     public interface IFileNameSanitizer
     {

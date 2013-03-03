@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
-using DrNuDownloader.Util;
 
 namespace DrNuDownloader.Clients
 {
@@ -15,18 +14,18 @@ namespace DrNuDownloader.Clients
     public class EpisodeClient : IEpisodeClient
     {
         private readonly IResourceClient _resourceClient;
-        private readonly IRtmpDump _rtmpDump;
         private readonly IFileNameSanitizer _fileNameSanitizer;
+        private readonly IDrNuRtmpStreamFactory _drNuRtmpStreamFactory;
 
-        public EpisodeClient(IResourceClient resourceClient, IRtmpDump rtmpDump, IFileNameSanitizer fileNameSanitizer)
+        public EpisodeClient(IResourceClient resourceClient, IFileNameSanitizer fileNameSanitizer, IDrNuRtmpStreamFactory drNuRtmpStreamFactory)
         {
             if (resourceClient == null) throw new ArgumentNullException("resourceClient");
-            if (rtmpDump == null) throw new ArgumentNullException("rtmpDump");
             if (fileNameSanitizer == null) throw new ArgumentNullException("fileNameSanitizer");
+            if (drNuRtmpStreamFactory == null) throw new ArgumentNullException("drNuRtmpStreamFactory");
 
             _resourceClient = resourceClient;
-            _rtmpDump = rtmpDump;
             _fileNameSanitizer = fileNameSanitizer;
+            _drNuRtmpStreamFactory = drNuRtmpStreamFactory;
         }
 
         public void Download(Uri episodeUri)
@@ -54,7 +53,13 @@ namespace DrNuDownloader.Clients
 
             var fileName = _fileNameSanitizer.Sanitize(string.Format("{0}.flv", resource.PostingTitle));
 
-            _rtmpDump.Download(rtmpUri, fileName);
+            using (var drNuRtmpStream = _drNuRtmpStreamFactory.CreateDrNuRtmpStream(rtmpUri))
+            {
+                using (var fileStream = File.Create(fileName))
+                {
+                    drNuRtmpStream.CopyTo(fileStream);
+                }
+            }
         }
     }
 }
