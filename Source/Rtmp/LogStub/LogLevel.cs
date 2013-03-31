@@ -1,6 +1,6 @@
-﻿namespace Rtmp
+﻿namespace Rtmp.LogStub
 {
-    internal enum LogLevel
+    public enum LogLevel
     {
         Critical = 0,
         Error,

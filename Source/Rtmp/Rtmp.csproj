@@ -39,9 +39,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LibRtmp.cs" />
-    <Compile Include="LogLevel.cs" />
-    <Compile Include="LogStub.cs" />
+    <Compile Include="DurationEventArgs.cs" />
+    <Compile Include="ElapsedEventArgs.cs" />
+    <Compile Include="LibRtmp\AmfObject.cs" />
+    <Compile Include="LibRtmp\Aval.cs" />
+    <Compile Include="LibRtmp\LibRtmpWrapper.cs" />
+    <Compile Include="LibRtmp\Rtmp.cs" />
+    <Compile Include="LibRtmp\RtmpLnk.cs" />
+    <Compile Include="LibRtmp\RtmpPacket.cs" />
+    <Compile Include="LibRtmp\RtmpRead.cs" />
+    <Compile Include="LibRtmp\RtmpSockBuf.cs" />
+    <Compile Include="LogStub\LogCallBack.cs" />
+    <Compile Include="LogStub\LogLevel.cs" />
+    <Compile Include="LogStub\LogStubWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RtmpStream.cs" />
     <Compile Include="UriData.cs" />
@@ -57,6 +67,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

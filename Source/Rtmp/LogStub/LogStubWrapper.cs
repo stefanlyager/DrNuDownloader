@@ -1,11 +1,9 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace Rtmp
+namespace Rtmp.LogStub
 {
-    internal class LogStub
+    internal class LogStubWrapper
     {
-        public delegate void LogCallback(LogLevel logLevel, string message);
-
         [DllImport("logstub.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int InitSockets();
 

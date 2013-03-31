@@ -3,11 +3,14 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using Rtmp;
 
 namespace DrNuDownloader.Clients
 {
     public interface IEpisodeClient
     {
+        event EventHandler<DurationEventArgs> Duration;
+        event EventHandler<ElapsedEventArgs> Elapsed;
         void Download(Uri episodeUri);
     }
 
@@ -16,6 +19,9 @@ namespace DrNuDownloader.Clients
         private readonly IResourceClient _resourceClient;
         private readonly IFileNameSanitizer _fileNameSanitizer;
         private readonly IDrNuRtmpStreamFactory _drNuRtmpStreamFactory;
+
+        public event EventHandler<DurationEventArgs> Duration;
+        public event EventHandler<ElapsedEventArgs> Elapsed;
 
         public EpisodeClient(IResourceClient resourceClient, IFileNameSanitizer fileNameSanitizer, IDrNuRtmpStreamFactory drNuRtmpStreamFactory)
         {
@@ -55,10 +61,35 @@ namespace DrNuDownloader.Clients
 
             using (var drNuRtmpStream = _drNuRtmpStreamFactory.CreateDrNuRtmpStream(rtmpUri))
             {
+                drNuRtmpStream.Duration += (sender, args) => OnDuration(args);
+                drNuRtmpStream.Elapsed += (sender, args) => OnElapsed(args);
+
                 using (var fileStream = File.Create(fileName))
                 {
                     drNuRtmpStream.CopyTo(fileStream);
                 }
+            }
+        }
+
+        protected virtual void OnDuration(DurationEventArgs durationEventArgs)
+        {
+            if (durationEventArgs == null) throw new ArgumentNullException("durationEventArgs");
+
+            var handler = Duration;
+            if (handler != null)
+            {
+                handler(this, durationEventArgs);
+            }
+        }
+
+        protected virtual void OnElapsed(ElapsedEventArgs elapsedEventArgs)
+        {
+            if (elapsedEventArgs == null) throw new ArgumentNullException("elapsedEventArgs");
+
+            var handler = Elapsed;
+            if (handler != null)
+            {
+                handler(this, elapsedEventArgs);
             }
         }
     }

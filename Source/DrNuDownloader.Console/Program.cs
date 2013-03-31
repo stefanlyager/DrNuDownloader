@@ -14,6 +14,21 @@ namespace DrNuDownloader.Console
 
             var drNuClient = bootstrapper.Container.Resolve<IDrNuClient>();
 
+            TimeSpan duration = TimeSpan.MinValue;
+            drNuClient.Duration += (sender, eventArgs) => { duration = eventArgs.Duration; };
+            drNuClient.Elapsed += (sender, eventArgs) =>
+            {
+                System.Console.CursorLeft = 0;
+
+                double progressInPercent = 0;
+                if (duration != TimeSpan.MinValue)
+                {
+                    progressInPercent = (double)eventArgs.Elapsed.Ticks / duration.Ticks * 100;
+                }
+                    
+                System.Console.Write("Downloading RTMP stream at {0} of {1} ({2}%).", eventArgs.Elapsed.ToString(@"hh\:mm\:ss"), duration.ToString(@"hh\:mm\:ss"), progressInPercent.ToString("##0.00"));
+            };
+
             var modelBindingDefinition = Configuration.Configure<Arguments>();
             try
             {

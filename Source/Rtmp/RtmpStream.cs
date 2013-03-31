@@ -1,16 +1,20 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using Rtmp.LibRtmp;
+using Rtmp.LogStub;
 
 namespace Rtmp
 {
     public class RtmpStream : Stream
     {
+        private readonly ILibRtmpWrapper _libRtmpWrapper;
         private readonly IUriData _uriData;
         private bool _canRead;
         private bool _isOpen;
         private long _position;
         private IntPtr _rtmp;
+        private bool _durationFired;
 
         public override bool CanRead
         {
@@ -31,16 +35,21 @@ namespace Rtmp
         {
             get { throw new NotSupportedException(); }
         }
-        
+
         public override long Position {
             get { return _position; }
             set { throw new NotSupportedException(); }
         }
 
-        public RtmpStream(IUriData uriData)
+        public event EventHandler<DurationEventArgs> Duration;
+        public event EventHandler<ElapsedEventArgs> Elapsed;
+
+        public RtmpStream(ILibRtmpWrapper libRtmpWrapper, IUriData uriData)
         {
+            if (libRtmpWrapper == null) throw new ArgumentNullException("libRtmpWrapper");
             if (uriData == null) throw new ArgumentNullException("uriData");
 
+            _libRtmpWrapper = libRtmpWrapper;
             _uriData = uriData;
             _canRead = true;
             _isOpen = false;
@@ -75,13 +84,13 @@ namespace Rtmp
             if (offset == 0 && buffer.Length == count)
             {
                 // Read directly into buffer.
-                bytesRead = LibRtmp.RTMP_Read(_rtmp, buffer, buffer.Length);
+                bytesRead = _libRtmpWrapper.Read(_rtmp, buffer, buffer.Length);
             }
             else
             {
                 // Create intermediary buffer.
                 var intermediaryBuffer = new byte[count];
-                bytesRead = LibRtmp.RTMP_Read(_rtmp, intermediaryBuffer, intermediaryBuffer.Length);
+                bytesRead = _libRtmpWrapper.Read(_rtmp, intermediaryBuffer, intermediaryBuffer.Length);
 
                 // Copy to buffer.
                 for (int i = 0; i < bytesRead; i++)
@@ -99,13 +108,29 @@ namespace Rtmp
                 _position += bytesRead;    
             }
 
+            if (!_durationFired)
+            {
+                var seconds = _libRtmpWrapper.GetDuration(_rtmp);
+                var durationEventArgs = new DurationEventArgs(TimeSpan.FromSeconds(seconds));
+                OnDuration(durationEventArgs);
+
+                _durationFired = true;
+            }
+
+            var rtmp = (LibRtmp.Rtmp)Marshal.PtrToStructure(_rtmp, typeof(LibRtmp.Rtmp));
+            if (rtmp.m_read.timestamp != 0)
+            {
+                var elapsed = TimeSpan.FromMilliseconds(rtmp.m_read.timestamp);
+                OnElapsed(new ElapsedEventArgs(elapsed));
+            }
+
             return bytesRead;
         }
 
-        private void Open()
+        public void Open()
         {
-            LibRtmp.RTMP_LogSetLevel((int)LogLevel.All); // TODO: Investigate if flags can be used.
-            var logCallback = new LogStub.LogCallback((level, message) =>
+            _libRtmpWrapper.LogSetLevel((int)LogLevel.All); // TODO: Investigate if flags can be used.
+            var logCallback = new LogCallback((level, message) =>
             {
                 switch (level)
                 {
@@ -114,24 +139,24 @@ namespace Rtmp
                         throw new IOException(message);
                 }
             });
-            LogStub.SetLogCallback(logCallback);
+            LogStubWrapper.SetLogCallback(logCallback);
 
-            _rtmp = LibRtmp.RTMP_Alloc();
+            _rtmp = _libRtmpWrapper.Alloc();
             if (_rtmp == IntPtr.Zero)
             {
                 throw new IOException("Unable to open RTMPStream.");
             }
 
-            LibRtmp.RTMP_Init(_rtmp);
-            LibRtmp.RTMP_SetupURL(_rtmp, Marshal.StringToHGlobalAnsi(_uriData.ToUri()));
+            _libRtmpWrapper.Init(_rtmp);
+            _libRtmpWrapper.SetupUrl(_rtmp, Marshal.StringToHGlobalAnsi(_uriData.ToUri()));
 
-            LogStub.InitSockets();
-            if (LibRtmp.RTMP_Connect(_rtmp, IntPtr.Zero) == 0)
+            LogStubWrapper.InitSockets();
+            if (_libRtmpWrapper.Connect(_rtmp, IntPtr.Zero) == 0)
             {
                 throw new IOException("Failed to establish RTMP connection.");
             }
 
-            if (LibRtmp.RTMP_ConnectStream(_rtmp, 0) == 0)
+            if (_libRtmpWrapper.ConnectStream(_rtmp, 0) == 0)
             {
                 throw new IOException("Failed to establish RTMP session.");
             }
@@ -145,12 +170,12 @@ namespace Rtmp
 
             if (_rtmp != IntPtr.Zero)
             {
-                LibRtmp.RTMP_Close(_rtmp);
-                LibRtmp.RTMP_Free(_rtmp);
+                _libRtmpWrapper.Close(_rtmp);
+                _libRtmpWrapper.Free(_rtmp);
             }
 
             // TODO: Check that InitSockets() was called successfully.
-            LogStub.CleanupSockets();
+            LogStubWrapper.CleanupSockets();
 
             _isOpen = false;
             _canRead = false;
@@ -159,6 +184,28 @@ namespace Rtmp
         public override void Write(byte[] buffer, int offset, int count)
         {
             throw new NotSupportedException();
+        }
+
+        protected virtual void OnDuration(DurationEventArgs durationEventArgs)
+        {
+            if (durationEventArgs == null) throw new ArgumentNullException("durationEventArgs");
+
+            var handler = Duration;
+            if (handler != null)
+            {
+                handler(this, durationEventArgs);
+            }
+        }
+
+        protected virtual void OnElapsed(ElapsedEventArgs elapsedEventArgs)
+        {
+            if (elapsedEventArgs == null) throw new ArgumentNullException("elapsedEventArgs");
+
+            var handler = Elapsed;
+            if (handler != null)
+            {
+                handler(this, elapsedEventArgs);
+            }
         }
     }
 }

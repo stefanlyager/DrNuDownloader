@@ -64,6 +64,10 @@
       <Project>{296E1543-3011-4074-9717-E51C45E9EC40}</Project>
       <Name>DrNuDownloader</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Rtmp\Rtmp.csproj">
+      <Project>{DA11BF28-5803-40AF-86F2-AB5ABF1931FC}</Project>
+      <Name>Rtmp</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
