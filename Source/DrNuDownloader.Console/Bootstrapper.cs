@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Rtmp;
 
-namespace DrNuDownloader
+namespace DrNuDownloader.Console
 {
     public class Bootstrapper
     {
@@ -10,9 +10,11 @@ namespace DrNuDownloader
         public void Initialize()
         {
             var containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterAssemblyTypes(typeof(RtmpStream).Assembly)
+                            .AsImplementedInterfaces();
             containerBuilder.RegisterAssemblyTypes(typeof(DrNuClient).Assembly)
                             .AsImplementedInterfaces();
-            containerBuilder.RegisterAssemblyTypes(typeof(RtmpStream).Assembly)
+            containerBuilder.RegisterAssemblyTypes(typeof(Program).Assembly)
                             .AsImplementedInterfaces();
             Container = containerBuilder.Build();
         }

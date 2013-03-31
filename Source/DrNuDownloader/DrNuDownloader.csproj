@@ -51,7 +51,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bootstrapper.cs" />
     <Compile Include="DrNuClient.cs" />
     <Compile Include="Clients\EpisodeClient.cs" />
     <Compile Include="Clients\EpisodeListClient.cs" />
