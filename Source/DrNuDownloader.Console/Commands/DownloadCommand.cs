@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Text;
 
 namespace DrNuDownloader.Console.Commands
 {
@@ -23,25 +24,62 @@ namespace DrNuDownloader.Console.Commands
 
         public void Execute()
         {
+            System.Console.CursorVisible = false;
+            System.Console.WriteLine("DR NU Downloader");
+            System.Console.WriteLine("Copyright (c) 2012 Stefan Lyager");
+            System.Console.WriteLine();
+
             TimeSpan duration = TimeSpan.MinValue;
-            _drNuClient.Duration += (sender, eventArgs) => { duration = eventArgs.Duration; };
+            _drNuClient.Duration += (sender, eventArgs) =>
+            {
+                duration = eventArgs.Duration;
+                WriteProgressBar(duration, TimeSpan.MinValue, 0);
+            };
+
             _drNuClient.Elapsed += (sender, eventArgs) =>
             {
                 System.Console.CursorLeft = 0;
-
-                double progressInPercent = 0;
-                if (duration != TimeSpan.MinValue)
-                {
-                    progressInPercent = (double)eventArgs.Elapsed.Ticks / duration.Ticks * 100;
-                }
-
-                System.Console.Write("Downloading RTMP stream at {0} of {1} ({2}%).",
-                                     eventArgs.Elapsed.ToString(@"hh\:mm\:ss"),
-                                     duration.ToString(@"hh\:mm\:ss"),
-                                     progressInPercent.ToString("##0.00", CultureInfo.InvariantCulture));
+                System.Console.CursorTop -= 2;
+                WriteProgressBar(duration, eventArgs.Elapsed, eventArgs.Bytes);
             };
 
             _drNuClient.Download(_downloadUri);
+        }
+
+        private void WriteProgressBar(TimeSpan duration, TimeSpan elapsed, double bytesDownloaded)
+        {
+            var progressBarStringBuilder = new StringBuilder();
+
+            double progressInPercent = 0;
+            if (duration != TimeSpan.MinValue && elapsed != TimeSpan.MinValue)
+            {
+                progressInPercent = (double)elapsed.Ticks / duration.Ticks * 100;
+            }
+
+            progressBarStringBuilder.Append("[");
+
+            int progressedTicks = (int)Math.Floor(progressInPercent) / 2;
+            for (int i = 1; i <= 50; i++)
+            {
+                if (i <= progressedTicks)
+                {
+                    progressBarStringBuilder.Append(i < progressedTicks ? "=" : ">");
+                }
+                else
+                {
+                    progressBarStringBuilder.Append(".");
+                }
+            }
+
+            progressBarStringBuilder.Append("]");
+
+            progressBarStringBuilder.AppendLine(string.Format(" ({0}%)", progressInPercent.ToString("##0.00", CultureInfo.InvariantCulture)));
+            progressBarStringBuilder.AppendLine();
+            progressBarStringBuilder.Append(string.Format("{0} kB downloaded ({1} out of {2} total)",
+                                                          Math.Floor(bytesDownloaded / 1024),
+                                                          elapsed.ToString(@"hh\:mm\:ss"),
+                                                          duration.ToString(@"hh\:mm\:ss")));
+            System.Console.Write(progressBarStringBuilder.ToString());
         }
     }
 }

@@ -121,7 +121,7 @@ namespace Rtmp
             if (rtmp.m_read.timestamp != 0)
             {
                 var elapsed = TimeSpan.FromMilliseconds(rtmp.m_read.timestamp);
-                OnElapsed(new ElapsedEventArgs(elapsed));
+                OnElapsed(new ElapsedEventArgs(elapsed, _position));
             }
 
             return bytesRead;
