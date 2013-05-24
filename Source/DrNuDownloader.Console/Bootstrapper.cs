@@ -10,12 +10,9 @@ namespace DrNuDownloader.Console
         public void Initialize()
         {
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterAssemblyTypes(typeof(RtmpStream).Assembly)
-                            .AsImplementedInterfaces();
-            containerBuilder.RegisterAssemblyTypes(typeof(DrNuClient).Assembly)
-                            .AsImplementedInterfaces();
-            containerBuilder.RegisterAssemblyTypes(typeof(Program).Assembly)
-                            .AsImplementedInterfaces();
+            containerBuilder.RegisterAssemblyModules(typeof(RtmpStream).Assembly);
+            containerBuilder.RegisterAssemblyModules(typeof(DrNuClient).Assembly);
+            containerBuilder.RegisterAssemblyModules(typeof(Bootstrapper).Assembly);
             Container = containerBuilder.Build();
         }
     }

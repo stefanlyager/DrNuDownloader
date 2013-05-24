@@ -36,14 +36,21 @@ namespace DrNuDownloader.Console.Commands
                 WriteProgressBar(duration, TimeSpan.MinValue, 0);
             };
 
+            long bytesDownloaded = 0;
             _drNuClient.Elapsed += (sender, eventArgs) =>
             {
+                bytesDownloaded = eventArgs.Bytes;
+
                 System.Console.CursorLeft = 0;
                 System.Console.CursorTop -= 2;
                 WriteProgressBar(duration, eventArgs.Elapsed, eventArgs.Bytes);
             };
 
             _drNuClient.Download(_downloadUri);
+
+            System.Console.CursorLeft = 0;
+            System.Console.CursorTop -= 2;
+            WriteProgressBar(duration, duration, bytesDownloaded);
         }
 
         private void WriteProgressBar(TimeSpan duration, TimeSpan elapsed, double bytesDownloaded)
@@ -58,7 +65,7 @@ namespace DrNuDownloader.Console.Commands
 
             progressBarStringBuilder.Append("[");
 
-            int progressedTicks = (int)Math.Floor(progressInPercent) / 2;
+            var progressedTicks = (int)Math.Floor(progressInPercent / 2);
             for (int i = 1; i <= 50; i++)
             {
                 if (i <= progressedTicks)

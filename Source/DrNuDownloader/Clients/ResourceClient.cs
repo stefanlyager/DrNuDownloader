@@ -20,7 +20,7 @@ namespace DrNuDownloader.Clients
             var request = WebRequest.CreateHttp(resourceUri);
             var response = request.GetResponse();
 
-            String json;
+            string json;
             using (var streamReader = new StreamReader(response.GetResponseStream()))
             {
                 json = streamReader.ReadToEnd();

@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using DrNuDownloader.Clients.Json;
 using Rtmp;
 
 namespace DrNuDownloader.Clients
@@ -53,11 +54,34 @@ namespace DrNuDownloader.Clients
 
             var resourceUri = new Uri(match.Groups["uri"].Value);
             var resource = _resourceClient.GetResource(resourceUri);
+            
+            if (resource.Data == null)
+            {
+                throw new ParseException("Data property not found.");
+            }
 
-            var link = resource.Links.OrderByDescending(l => l.BitrateInKbps).First();
+            var data = resource.Data.FirstOrDefault();
+            if (data == null)
+            {
+                throw new ParseException("Data property contains no elemements.");
+            }
+
+            if (data.Assets == null)
+            {
+                throw new ParseException("Assets property not found.");
+            }
+
+            var videoResourceAsset = data.Assets.FirstOrDefault() as VideoResourceAsset;
+            if (videoResourceAsset == null)
+            {
+                throw new ParseException("Video resource not found.");
+            }
+
+            var link = videoResourceAsset.Links.Where(l => l.Target == "Streaming")
+                                                .OrderByDescending(l => l.Bitrate).First();
             var rtmpUri = new Uri(link.Uri);
 
-            var fileName = _fileNameSanitizer.Sanitize(string.Format("{0}.flv", resource.PostingTitle));
+            var fileName = _fileNameSanitizer.Sanitize(string.Format("{0}.flv", data.Title));
 
             using (var drNuRtmpStream = _drNuRtmpStreamFactory.CreateDrNuRtmpStream(rtmpUri))
             {
