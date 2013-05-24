@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rtmp", "Rtmp\Rtmp.csproj", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A4E2E1B0-B3A8-4679-A27E-92783F3B0A9A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrNuDownloader.Wpf", "DrNuDownloader.Wpf\DrNuDownloader.Wpf.csproj", "{9C025B8D-182A-4946-ACE8-DFBC370AF9AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,12 @@ Global
 		{DA11BF28-5803-40AF-86F2-AB5ABF1931FC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DA11BF28-5803-40AF-86F2-AB5ABF1931FC}.Release|x86.ActiveCfg = Release|x86
 		{DA11BF28-5803-40AF-86F2-AB5ABF1931FC}.Release|x86.Build.0 = Release|x86
+		{9C025B8D-182A-4946-ACE8-DFBC370AF9AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C025B8D-182A-4946-ACE8-DFBC370AF9AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C025B8D-182A-4946-ACE8-DFBC370AF9AD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9C025B8D-182A-4946-ACE8-DFBC370AF9AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C025B8D-182A-4946-ACE8-DFBC370AF9AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C025B8D-182A-4946-ACE8-DFBC370AF9AD}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
