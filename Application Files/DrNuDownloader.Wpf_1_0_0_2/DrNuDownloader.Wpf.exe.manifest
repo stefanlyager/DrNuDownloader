@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="DrNuDownloader.Wpf.exe" version="1.0.0.2" publicKeyToken="0695b5cadefcf7ae" language="neutral" processorArchitecture="msil" type="win32" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="DrNuDownloader.Wpf" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="DrNuDownloader.Wpf.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the 
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward 
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Autofac.dll" size="198656">
+      <assemblyIdentity name="Autofac" version="3.0.0.0" publicKeyToken="17863AF14B0044DA" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>F6ssu5eS4vGFAkh/d6Srg/Y/W+A=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Autofac.Configuration.dll" size="36864">
+      <assemblyIdentity name="Autofac.Configuration" version="3.0.0.0" publicKeyToken="17863AF14B0044DA" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>hl3E+qZtqb3uKeFsaso9t6lPv5I=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DrNuDownloader.dll" size="19968">
+      <assemblyIdentity name="DrNuDownloader" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>4uA8VGS2FaLDfi0L5CqnINJwDpM=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DrNuDownloader.Wpf.exe" size="24064">
+      <assemblyIdentity name="DrNuDownloader.Wpf" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>Ewsh6cSHQ07hw3UG0SD0d3a0+9k=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="HtmlAgilityPack.dll" size="134656">
+      <assemblyIdentity name="HtmlAgilityPack" version="1.4.6.0" publicKeyToken="BD319B19EAF3B43A" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>h48E3AHvwtYGiwkIjeklY9JaR+o=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Newtonsoft.Json.dll" size="391680">
+      <assemblyIdentity name="Newtonsoft.Json" version="4.5.0.0" publicKeyToken="30AD4FE6B2A6AEED" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>Ot99W3AcLuSvn6p5w2/HJKc6FCc=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Rtmp.dll" size="18944">
+      <assemblyIdentity name="Rtmp" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>3A2RGnQqzEES7buiBMQpQvTOZqo=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="DrNuDownloader.Wpf.exe.config" size="187">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>B/oLLwC6gqRAv+rK/YsLjRs+Tuc=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="librtmp.dll" size="178176">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>V0Exj6jy0lNo/4bq8XLXaucipoU=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="LogStub.dll" size="8192">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>rgxgqAOA2EDZ2MKxreq6c4oualE=</dsig:DigestValue>
+    </hash>
+  </file>
+  
+<publisherIdentity name="CN=stefanlyager.dk" issuerKeyHash="72a80ac4a0468f5e6831f6500d282031d58de547" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>33giSIk51unD57jbcd+6tcvrSsU=</DigestValue></Reference></SignedInfo><SignatureValue>RfZro2E/+fG/H8RHbSbSI7gv/zH2SlJjrP/D8Ph/hq2R/kAV86gJhnI2QM9sya8z3nSfUTzHgb4lut3zR6lVcx6XNq6k3FbpAWmcwWJLe/8kS+uGruhH/CobzfQJz4LCrf5RZuOWdafPWvnxENgV+dFlnQ5R6NqMp1UuT1rERP0iqOZkaRiHDtjtg1xD9QdxbR2L47rc463FnRHbDgaM/biXpA6ShE0/TRuezWkt646lMyf7Z1GuRQLpYZHVbu3RJDJqmd7fOG00g89tpBBWotAteKyay4wvlFf9VcksUGeUrYwFldAvP4XDJtVyIHHGj4ObvKBxPHFbSJ03TeIzKA==</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>4cvO6iRn16xrRZe6lzX3AK7uENSSivd+xJXeSuuflGi3F3BbviyG9LOJqXNvnEVyQyaIWiQS+30Lrf+8SQfcw9b8wZZXlyIJd0UBpGZArzR9L9onxx2Dr0hwQaNUpjkwqUHlOR5/4E1KW4FsGrKUq9WSpkB1SOv6EVQT5BCf6/saJfNnrdWfzOunJqkjFYNA2n0u28mGcx1oLh5JWp6sqitlEfU0/pX1npQ54mXLnnJvJPuuP3GYKfoeTH/RR9ByyPowwdrmAX03llZwHmyGqFx/TdeHTorZJVoJgjToVBY68PaTZLFH1nvXmz7laUJCr7outmtjCgSA85v0E+Kd2w==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="c54aebcbb5badf71dbb8e7c3e9d63989482278df" Description="" Url=""><as:assemblyIdentity name="DrNuDownloader.Wpf.exe" version="1.0.0.2" publicKeyToken="0695b5cadefcf7ae" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=stefanlyager.dk</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>cXyijxjh/Gm28opdXCSzWBfoQjk=</DigestValue></Reference></SignedInfo><SignatureValue>tb21nTogOftQYbsdt/epoCmzBV2yoZNQN96t/peO8CdXpdnid4mZA/ab0KZ6Qlx3JDQu2wKMDAHjooTfuGBhXKRhUW+wdRaJicqteDQAadjAFE0YB3jw6GO2TSVAbjt7lAwIpKa0blvBQU4gYyTSlaCsUQXBO7oehbJSX6Axg4LQPeWacG+HDmBl8DFZkDjIQxqOc0i/al/kTMNoGyEYbfcKzEAMG21geDJbZqN6jjFanI7wQM6I6BpJVdrQ0e+ggqBdBVPSDxsfQ4meSLvZBQSEpcW7jXhIR8vnQ/8AQ08YkseZx1R3fYAWDOyrTe1IpvtanJSJubwppEnxVo/jCg==</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>4cvO6iRn16xrRZe6lzX3AK7uENSSivd+xJXeSuuflGi3F3BbviyG9LOJqXNvnEVyQyaIWiQS+30Lrf+8SQfcw9b8wZZXlyIJd0UBpGZArzR9L9onxx2Dr0hwQaNUpjkwqUHlOR5/4E1KW4FsGrKUq9WSpkB1SOv6EVQT5BCf6/saJfNnrdWfzOunJqkjFYNA2n0u28mGcx1oLh5JWp6sqitlEfU0/pX1npQ54mXLnnJvJPuuP3GYKfoeTH/RR9ByyPowwdrmAX03llZwHmyGqFx/TdeHTorZJVoJgjToVBY68PaTZLFH1nvXmz7laUJCr7outmtjCgSA85v0E+Kd2w==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIDBzCCAfOgAwIBAgIQdOeJFwdgA69P6eviTlPMYzAJBgUrDgMCHQUAMBsxGTAXBgNVBAMTEFN0ZWZhbiBMeWFnZXIgQ0EwHhcNMTMwNjAxMTkyNzM0WhcNMzkxMjMxMjM1OTU5WjAaMRgwFgYDVQQDEw9zdGVmYW5seWFnZXIuZGswggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDhy87qJGfXrGtFl7qXNfcAru4Q1JKK937Eld5K65+UaLcXcFu+LIb0s4mpc2+cRXJDJohaJBL7fQut/7xJB9zD1vzBlleXIgl3RQGkZkCvNH0v2ifHHYOvSHBBo1SmOTCpQeU5Hn/gTUpbgWwaspSr1ZKmQHVI6/oRVBPkEJ/r+xol82et1Z/M66cmqSMVg0DafS7byYZzHWguHklanqyqK2UR9TT+lfWelDniZcuecm8k+64/cZgp+h5Mf9FH0HLI+jDB2uYBfTeWVnAebIaoXH9N14dOitklWgmCNOhUFjrw9pNksUfWe9ebPuVpQkKvui62a2MKBIDzm/QT4p3bAgMBAAGjUDBOMEwGA1UdAQRFMEOAEIFtU7QW56xSmRXZUvxw8fKhHTAbMRkwFwYDVQQDExBTdGVmYW4gTHlhZ2VyIENBghCFg4xr88zKq0LUK6V3iJklMAkGBSsOAwIdBQADggEBACfjBk9KuvD+skvyUIJZysr68u0hWcyAL5qm2bvrbRtHaRvaV/DTKtJjJLKv44LzckowR3xvVDDZciSDwcHXGSNSEJz3QsGyidASrNJ8DTNI3rQCfqqTcNkpCFrwouyrEOPLRQVX5wXDUzEIXCYR9x2UNK7yyS6ll4J8qvVRmH2it9L4PsfQ2HzRQqtqcfW9KqMPBo/4LLCEoqgFOtnEkVAyzDeAHcXOpXdk+hwIddkdENXageJel5B92c9aTTkDr4hnq1sZzesCVPMLPw3YEtevvuimAJGaues68R+GL5oHmgIbKjYiCZ0D3Tp5Ec6vn375HrksTpzAv61MIFY6B0M=</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
