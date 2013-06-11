@@ -1,12 +1,56 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting;
+using System.Threading;
+using System.Threading.Tasks;
 using Rtmp.LibRtmp;
 using Rtmp.LogStub;
 
 namespace Rtmp
 {
-    public class RtmpStream : Stream
+    public interface IRtmpStream : IDisposable
+    {
+        bool CanRead { get; }
+        bool CanSeek { get; }
+        bool CanWrite { get; }
+        long Length { get; }
+        long Position { get; set; }
+        bool CanTimeout { get; }
+        int ReadTimeout { get; set; }
+        int WriteTimeout { get; set; }
+        event EventHandler<DurationEventArgs> Duration;
+        event EventHandler<ElapsedEventArgs> Elapsed;
+        void Flush();
+        long Seek(long offset, SeekOrigin origin);
+        void SetLength(long value);
+        int Read(byte[] buffer, int offset, int count);
+        void Open();
+        void Close();
+        void Write(byte[] buffer, int offset, int count);
+        Task CopyToAsync(Stream destination);
+        Task CopyToAsync(Stream destination, int bufferSize);
+        Task CopyToAsync(Stream destination, int bufferSize, CancellationToken cancellationToken);
+        void CopyTo(Stream destination);
+        void CopyTo(Stream destination, int bufferSize);
+        Task FlushAsync();
+        Task FlushAsync(CancellationToken cancellationToken);
+        IAsyncResult BeginRead(byte[] buffer, int offset, int count, AsyncCallback callback, object state);
+        int EndRead(IAsyncResult asyncResult);
+        Task<int> ReadAsync(byte[] buffer, int offset, int count);
+        Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken);
+        IAsyncResult BeginWrite(byte[] buffer, int offset, int count, AsyncCallback callback, object state);
+        void EndWrite(IAsyncResult asyncResult);
+        Task WriteAsync(byte[] buffer, int offset, int count);
+        Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken);
+        int ReadByte();
+        void WriteByte(byte value);
+        object GetLifetimeService();
+        object InitializeLifetimeService();
+        ObjRef CreateObjRef(Type requestedType);
+    }
+
+    public class RtmpStream : Stream, IRtmpStream
     {
         private readonly ILibRtmpWrapper _libRtmpWrapper;
         private readonly IUriData _uriData;

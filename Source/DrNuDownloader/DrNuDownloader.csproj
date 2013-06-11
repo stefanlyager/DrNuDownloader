@@ -84,7 +84,9 @@
     <Compile Include="Clients\Json\Link.cs" />
     <Compile Include="Clients\Json\Resource.cs" />
     <Compile Include="Clients\ProgramClient.cs" />
+    <Compile Include="FileWrapper.cs" />
     <Compile Include="Modules\DrNuModule.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Clients\ResourceClient.cs" />
   </ItemGroup>

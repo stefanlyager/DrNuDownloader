@@ -8,7 +8,7 @@ namespace DrNuDownloader
 {
     public interface IDrNuRtmpStreamFactory
     {
-        RtmpStream CreateDrNuRtmpStream(Uri rtmpUri);
+        IRtmpStream CreateDrNuRtmpStream(Uri rtmpUri);
     }
 
     public class DrNuRtmpStreamFactory : IDrNuRtmpStreamFactory
@@ -25,7 +25,7 @@ namespace DrNuDownloader
             _uriDataFactory = uriDataFactory;
         }
 
-        public RtmpStream CreateDrNuRtmpStream(Uri rtmpUri)
+        public IRtmpStream CreateDrNuRtmpStream(Uri rtmpUri)
         {
             if (rtmpUri == null) throw new ArgumentNullException("rtmpUri");
 
