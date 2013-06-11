@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using DrNuDownloader.Clients.Json;
 using DrNuDownloader.Scrapers;
+using DrNuDownloader.Scrapers.Json;
 using DrNuDownloader.Wrappers;
 using Moq;
 using Xunit;

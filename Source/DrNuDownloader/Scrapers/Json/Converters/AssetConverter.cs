@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace DrNuDownloader.Clients.Json.Converters
+namespace DrNuDownloader.Scrapers.Json.Converters
 {
     public class AssetConverter : JsonConverter
     {

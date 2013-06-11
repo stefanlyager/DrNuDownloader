@@ -1,4 +1,4 @@
-﻿namespace DrNuDownloader.Clients.Json
+﻿namespace DrNuDownloader.Scrapers.Json
 {
     public class VideoResourceAsset : IAsset
     {

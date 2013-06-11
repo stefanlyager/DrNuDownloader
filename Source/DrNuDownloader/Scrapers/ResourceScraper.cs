@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using DrNuDownloader.Clients.Json;
+using DrNuDownloader.Scrapers.Json;
 using DrNuDownloader.Wrappers;
 
 namespace DrNuDownloader.Scrapers

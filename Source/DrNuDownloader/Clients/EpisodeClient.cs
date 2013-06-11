@@ -3,8 +3,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
-using DrNuDownloader.Clients.Json;
 using DrNuDownloader.Scrapers;
+using DrNuDownloader.Scrapers.Json;
 using Rtmp;
 
 namespace DrNuDownloader.Clients

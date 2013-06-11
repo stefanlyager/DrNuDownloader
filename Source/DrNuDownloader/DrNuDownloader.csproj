@@ -71,18 +71,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Clients\Json\Converters\AssetConverter.cs" />
-    <Compile Include="Clients\Json\IAsset.cs" />
-    <Compile Include="Clients\Json\Data.cs" />
-    <Compile Include="Clients\Json\VideoResourceAsset.cs" />
+    <Compile Include="Scrapers\Json\Converters\AssetConverter.cs" />
+    <Compile Include="Scrapers\Json\IAsset.cs" />
+    <Compile Include="Scrapers\Json\Data.cs" />
+    <Compile Include="Scrapers\Json\VideoResourceAsset.cs" />
     <Compile Include="DrNuClient.cs" />
     <Compile Include="Clients\EpisodeClient.cs" />
     <Compile Include="Clients\EpisodeListClient.cs" />
     <Compile Include="DrNuRtmpStreamFactory.cs" />
     <Compile Include="FileNameSanitizer.cs" />
+    <Compile Include="Mappers\IMapper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappers\ResourceMapper.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Scrapers\ScraperException.cs" />
-    <Compile Include="Clients\Json\Link.cs" />
-    <Compile Include="Clients\Json\Resource.cs" />
+    <Compile Include="Scrapers\Json\Link.cs" />
+    <Compile Include="Scrapers\Json\Resource.cs" />
     <Compile Include="Clients\ProgramClient.cs" />
     <Compile Include="Scrapers\ProgramScraper.cs" />
     <Compile Include="Wrappers\FileWrapper.cs" />

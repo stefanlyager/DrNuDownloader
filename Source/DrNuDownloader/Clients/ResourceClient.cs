@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using DrNuDownloader.Clients.Json;
+using DrNuDownloader.Scrapers.Json;
 using Newtonsoft.Json;
 
 namespace DrNuDownloader.Clients
