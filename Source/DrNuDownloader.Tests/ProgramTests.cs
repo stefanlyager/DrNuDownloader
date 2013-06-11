@@ -73,7 +73,7 @@ namespace DrNuDownloader.Tests
         }
 
         [Fact]
-        public void Download_ValidPath_RtmpStreamIsCopiedToFileStream()
+        public void Download_ValidPath_CopiesRtmpStreamToFileStream()
         {
             // Arrange
             var rtmpStreamMock = new Mock<IRtmpStream>();
@@ -84,7 +84,7 @@ namespace DrNuDownloader.Tests
             _program.Download(@"C:\ValidPath\Program.flv");
 
             // Assert
-            rtmpStreamMock.Verify(rs => rs.CopyTo(It.IsAny<FileStream>()));
+            rtmpStreamMock.Verify(rs => rs.CopyTo(It.IsAny<FileStream>()), Times.Once());
         }
     }
 }
