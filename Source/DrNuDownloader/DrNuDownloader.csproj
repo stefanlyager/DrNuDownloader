@@ -80,10 +80,11 @@
     <Compile Include="Clients\EpisodeListClient.cs" />
     <Compile Include="DrNuRtmpStreamFactory.cs" />
     <Compile Include="FileNameSanitizer.cs" />
-    <Compile Include="Clients\ParseException.cs" />
+    <Compile Include="Scrapers\ScraperException.cs" />
     <Compile Include="Clients\Json\Link.cs" />
     <Compile Include="Clients\Json\Resource.cs" />
     <Compile Include="Clients\ProgramClient.cs" />
+    <Compile Include="Scrapers\ProgramScraper.cs" />
     <Compile Include="Wrappers\FileWrapper.cs" />
     <Compile Include="Modules\DrNuModule.cs" />
     <Compile Include="Scrapers\IScraper.cs" />

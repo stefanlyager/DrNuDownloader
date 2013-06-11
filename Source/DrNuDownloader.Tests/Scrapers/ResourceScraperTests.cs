@@ -30,28 +30,28 @@ namespace DrNuDownloader.Tests.Scrapers
         public void Constructor_NullWebRequestWrapper_ThrowsArgumentException()
         {
             // Act and assert.
-            Assert.Throws<ArgumentNullException>(() => { new ResourceScraper(null, _jsonConvertWrapperMock.Object); });
+            Assert.Throws<ArgumentNullException>(() => new ResourceScraper(null, _jsonConvertWrapperMock.Object));
         }
 
         [Fact]
         public void Constructor_NullJsonConvertWrapper_ThrowsArgumentNullException()
         {
             // Act and assert.
-            Assert.Throws<ArgumentNullException>(() => { new ResourceScraper(_webRequestWrapperMock.Object, null); });
+            Assert.Throws<ArgumentNullException>(() => new ResourceScraper(_webRequestWrapperMock.Object, null));
         }
 
         [Fact]
         public void Scrape_NullUri_ThrowsArgumentNullException()
         {
             // Act and assert.
-            Assert.Throws<ArgumentNullException>(() => { _resourceScraper.Scrape(null); });
+            Assert.Throws<ArgumentNullException>(() => _resourceScraper.Scrape(null));
         }
 
         [Fact]
         public void Scrape_ValidUri_DeserializesJsonToObject()
         {
             // Arrange
-            var resourceUri = new Uri("http://www.stefanlyager.dk");
+            var resourceUri = new Uri("http://www.resource-uri.dk");
 
             var httpWebResponseMock = new Mock<HttpWebResponse>();
             httpWebResponseMock.Setup(hwr => hwr.GetResponseStream())

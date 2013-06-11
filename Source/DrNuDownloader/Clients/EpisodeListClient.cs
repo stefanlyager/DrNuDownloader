@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using DrNuDownloader.Scrapers;
 using HtmlAgilityPack;
 
 namespace DrNuDownloader.Clients
@@ -27,7 +28,7 @@ namespace DrNuDownloader.Clients
             var liElements = htmlDocument.DocumentNode.SelectNodes("//li");
             if (liElements == null)
             {
-                throw new ParseException("Unable to find li elements.");
+                throw new ScraperException("Unable to find li elements.");
             }
 
             foreach (var liElement in liElements)

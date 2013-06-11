@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using DrNuDownloader.Clients;
+using DrNuDownloader.Scrapers;
 using Rtmp;
 using Rtmp.LibRtmp;
 
@@ -41,7 +42,7 @@ namespace DrNuDownloader
             var match = regex.Match(rtmpUri.AbsoluteUri);
             if (!match.Success)
             {
-                throw new ParseException("Error parsing RTMP URI.");
+                throw new ScraperException("Error parsing RTMP URI.");
             }
             uriData.PlayPath = match.Groups["playpath"].Value;
 

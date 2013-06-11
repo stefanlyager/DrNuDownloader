@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using DrNuDownloader.Clients.Json;
+using DrNuDownloader.Scrapers;
 using Rtmp;
 
 namespace DrNuDownloader.Clients
@@ -49,7 +50,7 @@ namespace DrNuDownloader.Clients
             var match = regex.Match(html);
             if (!match.Success)
             {
-                throw new ParseException("Unable to find resource.");
+                throw new ScraperException("Unable to find resource.");
             }
 
             var resourceUri = new Uri(match.Groups["uri"].Value);
@@ -57,24 +58,24 @@ namespace DrNuDownloader.Clients
             
             if (resource.Data == null)
             {
-                throw new ParseException("Data property not found.");
+                throw new ScraperException("Data property not found.");
             }
 
             var data = resource.Data.FirstOrDefault();
             if (data == null)
             {
-                throw new ParseException("Data property contains no elemements.");
+                throw new ScraperException("Data property contains no elemements.");
             }
 
             if (data.Assets == null)
             {
-                throw new ParseException("Assets property not found.");
+                throw new ScraperException("Assets property not found.");
             }
 
             var videoResourceAsset = data.Assets.FirstOrDefault() as VideoResourceAsset;
             if (videoResourceAsset == null)
             {
-                throw new ParseException("Video resource not found.");
+                throw new ScraperException("Video resource not found.");
             }
 
             var link = videoResourceAsset.Links.Where(l => l.Target == "Streaming")

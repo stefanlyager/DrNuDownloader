@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
+using DrNuDownloader.Scrapers;
 
 namespace DrNuDownloader.Clients
 {
@@ -26,7 +27,7 @@ namespace DrNuDownloader.Clients
             var match = regex.Match(html);
             if (!match.Success)
             {
-                throw new ParseException("Unable to find programSerieSlug.");
+                throw new ScraperException("Unable to find programSerieSlug.");
             }
 
             return match.Groups["slug"].Value;
