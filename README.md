@@ -20,9 +20,3 @@ Lists all episodes of Matador.
     DrNuDownloader.Console.exe /d http://www.dr.dk/tv/se/matador/matador-18-24
 
 Will download episode 18 of Matador.
-
-### Download all episodes
-
-    DrNuDownloader.Console.exe /da http://www.dr.dk/tv/se/matador/matador-22-24
-
-Will download all episodes of Matador.

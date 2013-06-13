@@ -75,7 +75,6 @@
     <Compile Include="Arguments.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Commands\CommandFactory.cs" />
-    <Compile Include="Commands\DownloadAllCommand.cs" />
     <Compile Include="Commands\DownloadCommand.cs" />
     <Compile Include="Commands\HelpCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />

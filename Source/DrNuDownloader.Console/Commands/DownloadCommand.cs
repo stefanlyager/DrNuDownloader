@@ -11,14 +11,17 @@ namespace DrNuDownloader.Console.Commands
         public delegate IDownloadCommand Factory(Uri downloadUri);
 
         private readonly IDrNuClient _drNuClient;
+        private readonly IFileNameSanitizer _fileNameSanitizer;
         private readonly Uri _downloadUri;
 
-        public DownloadCommand(IDrNuClient drNuClient, Uri downloadUri)
+        public DownloadCommand(IDrNuClient drNuClient, IFileNameSanitizer fileNameSanitizer, Uri downloadUri)
         {
             if (drNuClient == null) throw new ArgumentNullException("drNuClient");
+            if (fileNameSanitizer == null) throw new ArgumentNullException("fileNameSanitizer");
             if (downloadUri == null) throw new ArgumentNullException("downloadUri");
 
             _drNuClient = drNuClient;
+            _fileNameSanitizer = fileNameSanitizer;
             _downloadUri = downloadUri;
         }
 
@@ -29,15 +32,22 @@ namespace DrNuDownloader.Console.Commands
             System.Console.WriteLine("Copyright (c) 2012 Stefan Lyager");
             System.Console.WriteLine();
 
+            var program = _drNuClient.GetProgram(_downloadUri);
+            if (!string.IsNullOrWhiteSpace(program.Title))
+            {
+                System.Console.WriteLine("Downloading \"{0}\" from DR NU.", program.Title);
+                System.Console.WriteLine();
+            }
+
             TimeSpan duration = TimeSpan.MinValue;
-            _drNuClient.Duration += (sender, eventArgs) =>
+            program.Duration += (sender, eventArgs) =>
             {
                 duration = eventArgs.Duration;
                 WriteProgressBar(duration, TimeSpan.MinValue, 0);
             };
 
             long bytesDownloaded = 0;
-            _drNuClient.Elapsed += (sender, eventArgs) =>
+            program.Elapsed += (sender, eventArgs) =>
             {
                 bytesDownloaded = eventArgs.Bytes;
 
@@ -46,7 +56,13 @@ namespace DrNuDownloader.Console.Commands
                 WriteProgressBar(duration, eventArgs.Elapsed, eventArgs.Bytes);
             };
 
-            _drNuClient.Download(_downloadUri);
+            string sanitizedTitle = _fileNameSanitizer.Sanitize(program.Title);
+            if (string.IsNullOrWhiteSpace(sanitizedTitle))
+            {
+                sanitizedTitle = "Program";
+            }
+
+            program.Download(string.Format("{0}.flv", sanitizedTitle));
 
             System.Console.CursorLeft = 0;
             System.Console.CursorTop -= 2;

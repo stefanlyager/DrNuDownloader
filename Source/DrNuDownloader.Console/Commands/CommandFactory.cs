@@ -12,17 +12,14 @@ namespace DrNuDownloader.Console.Commands
     {
         private readonly ListCommand.Factory _listCommandFactory;
         private readonly DownloadCommand.Factory _downloadCommandFactory;
-        private readonly DownloadAllCommand.Factory _downloadAllCommandFactory;
 
-        public CommandFactory(ListCommand.Factory listCommandFactory, DownloadCommand.Factory downloadCommandFactory, DownloadAllCommand.Factory downloadAllCommandFactory)
+        public CommandFactory(ListCommand.Factory listCommandFactory, DownloadCommand.Factory downloadCommandFactory)
         {
             if (listCommandFactory == null) throw new ArgumentNullException("listCommandFactory");
             if (downloadCommandFactory == null) throw new ArgumentNullException("downloadCommandFactory");
-            if (downloadAllCommandFactory == null) throw new ArgumentNullException("downloadAllCommandFactory");
 
             _listCommandFactory = listCommandFactory;
             _downloadCommandFactory = downloadCommandFactory;
-            _downloadAllCommandFactory = downloadAllCommandFactory;
         }
 
         public ICommand CreateCommand(string[] args)
@@ -40,11 +37,6 @@ namespace DrNuDownloader.Console.Commands
                 if (arguments.DownloadUri != null)
                 {
                     return _downloadCommandFactory(arguments.DownloadUri);
-                }
-
-                if (arguments.DownloadAllUri != null)
-                {
-                    return _downloadAllCommandFactory(arguments.DownloadAllUri);
                 }
             }
             catch (InvalidArgsFormatException) { }

@@ -14,9 +14,5 @@ namespace DrNuDownloader.Console
         [ArgsMemberSwitch("d")]
         [Description("Download episode from this URL.")]
         public Uri DownloadUri { get; set; }
-
-        [ArgsMemberSwitch("da")]
-        [Description("Download all episodes from this URL.")]
-        public Uri DownloadAllUri { get; set; }
     }
 }

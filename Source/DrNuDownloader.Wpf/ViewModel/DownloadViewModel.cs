@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using DrNuDownloader.Wpf.Annotations;
+using Microsoft.Win32;
 
 namespace DrNuDownloader.Wpf.ViewModel
 {
@@ -21,25 +22,15 @@ namespace DrNuDownloader.Wpf.ViewModel
     public class DownloadViewModel : IDownloadViewModel
     {
         private readonly IDrNuClient _drNuClient;
+        private readonly IFileNameSanitizer _fileNameSanitizer;
 
-        public DownloadViewModel(IDrNuClient drNuClient)
+        public DownloadViewModel(IDrNuClient drNuClient, IFileNameSanitizer fileNameSanitizer)
         {
             if (drNuClient == null) throw new ArgumentNullException("drNuClient");
+            if (fileNameSanitizer == null) throw new ArgumentNullException("fileNameSanitizer");
 
             _drNuClient = drNuClient;
-
-            _drNuClient.Duration += (sender, args) =>
-                {
-                    Duration = args.Duration;
-                };
-
-            _drNuClient.Elapsed += (sender, args) =>
-                {
-                    BytesDownloaded = args.Bytes;
-                    Elapsed = args.Elapsed;
-
-                    Progress = Convert.ToUInt16((double)args.Elapsed.Ticks / Duration.Ticks * 100);
-                };
+            _fileNameSanitizer = fileNameSanitizer;
         }
 
         public Uri Uri { get; set; }
@@ -92,15 +83,48 @@ namespace DrNuDownloader.Wpf.ViewModel
         private Thread _downloadThread;
         private void Download()
         {
-            _downloadThread = new Thread(() =>
+            var program = _drNuClient.GetProgram(Uri);
+
+            string sanitizedTitle = _fileNameSanitizer.Sanitize(program.Title);
+            if (string.IsNullOrWhiteSpace(sanitizedTitle))
+            {
+                sanitizedTitle = "Video";
+            }
+
+            var saveFileDialog = new SaveFileDialog
+                                     {
+                                         AddExtension = true,
+                                         FileName = sanitizedTitle,
+                                         DefaultExt = ".flv",
+                                         Filter = "Flash Video (.flv)|*.flv"
+                                     };
+            var result = saveFileDialog.ShowDialog();
+            if (result == true)
+            {
+                _downloadThread = new Thread(() =>
                 {
-                    _drNuClient.Download(Uri);
+                    program.Duration += (sender, args) =>
+                    {
+                        Duration = args.Duration;
+                    };
+
+                    program.Elapsed += (sender, args) =>
+                    {
+                        BytesDownloaded = args.Bytes;
+                        Elapsed = args.Elapsed;
+
+                        Progress = Convert.ToUInt16((double)args.Elapsed.Ticks / Duration.Ticks * 100);
+                    };
+
+                    program.Download(saveFileDialog.FileName);
 
                     Progress = 0;
-                    MessageBox.Show("Programmet er nu downloadet.", "Download færdig",
+                    MessageBox.Show("Videoen er nu downloadet.", "Download færdig",
                                     MessageBoxButton.OK, MessageBoxImage.Information);
                 });
-            _downloadThread.Start();
+
+                _downloadThread.Start();
+            }
         }
 
         // TODO: Progress

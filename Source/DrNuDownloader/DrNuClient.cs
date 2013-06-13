@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using DrNuDownloader.Clients;
+using DrNuDownloader.Mappers;
+using DrNuDownloader.Scrapers;
+using DrNuDownloader.Scrapers.Json;
 using Rtmp;
 
 namespace DrNuDownloader
@@ -10,30 +13,42 @@ namespace DrNuDownloader
         event EventHandler<DurationEventArgs> Duration;
         event EventHandler<ElapsedEventArgs> Elapsed;
         IEnumerable<Uri> GetEpisodeUris(Uri programUri);
-        void Download(Uri episodeUri);
+        IProgram GetProgram(Uri programUri);
     }
 
     public class DrNuClient : IDrNuClient
     {
         private readonly IProgramClient _programClient;
         private readonly IEpisodeListClient _episodeListClient;
-        private readonly IEpisodeClient _episodeClient;
+        private readonly IScraper<Uri> _programScraper;
+        private readonly IScraper<Resource> _resourceScraper;
+        private readonly IMapper<Resource, IProgram> _resourceMapper;
 
         public event EventHandler<DurationEventArgs> Duration;
         public event EventHandler<ElapsedEventArgs> Elapsed;
 
-        public DrNuClient(IProgramClient programClient, IEpisodeListClient episodeListClient, IEpisodeClient episodeClient)
+        public DrNuClient(IProgramClient programClient, IEpisodeListClient episodeListClient, IScraper<Uri> programScraper, IScraper<Resource> resourceScraper, IMapper<Resource, IProgram> resourceMapper)
         {
             if (programClient == null) throw new ArgumentNullException("programClient");
             if (episodeListClient == null) throw new ArgumentNullException("episodeListClient");
-            if (episodeClient == null) throw new ArgumentNullException("episodeClient");
+            if (programScraper == null) throw new ArgumentNullException("programScraper");
+            if (resourceScraper == null) throw new ArgumentNullException("resourceScraper");
+            if (resourceMapper == null) throw new ArgumentNullException("resourceMapper");
 
             _programClient = programClient;
             _episodeListClient = episodeListClient;
-            _episodeClient = episodeClient;
+            _programScraper = programScraper;
+            _resourceScraper = resourceScraper;
+            _resourceMapper = resourceMapper;
+        }
 
-            _episodeClient.Duration += (sender, args) => OnDuration(args);
-            _episodeClient.Elapsed += (sender, args) => OnElapsed(args);
+        public IProgram GetProgram(Uri programUri)
+        {
+            if (programUri == null) throw new ArgumentNullException("programUri");
+
+            var resourceUri = _programScraper.Scrape(programUri);
+            var resource = _resourceScraper.Scrape(resourceUri);
+            return _resourceMapper.Map(resource);
         }
 
         public IEnumerable<Uri> GetEpisodeUris(Uri programUri)
@@ -42,13 +57,6 @@ namespace DrNuDownloader
 
             var slug = _programClient.GetSlug(programUri);
             return _episodeListClient.GetEpisodeUris(slug);
-        }
-
-        public void Download(Uri episodeUri)
-        {
-            if (episodeUri == null) throw new ArgumentNullException("episodeUri");
-
-            _episodeClient.Download(episodeUri);
         }
 
         protected virtual void OnDuration(DurationEventArgs durationEventArgs)
