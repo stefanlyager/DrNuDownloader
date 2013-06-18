@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace DrNuDownloader.Scrapers
+﻿namespace DrNuDownloader.Scrapers
 {
-    public interface IScraper<out T>
+    public interface IScraper<in TInput, out TOutput>
     {
-        T Scrape(Uri uri);
+        TOutput Scrape(TInput input);
     }
 }

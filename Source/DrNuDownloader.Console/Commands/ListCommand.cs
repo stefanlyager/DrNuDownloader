@@ -22,7 +22,7 @@ namespace DrNuDownloader.Console.Commands
 
         public void Execute()
         {
-            var episodeUris = _drNuClient.GetEpisodeUris(_listUri);
+            var episodeUris = _drNuClient.GetProgramUris(_listUri);
             foreach (var uri in episodeUris)
             {
                 System.Console.WriteLine(uri);

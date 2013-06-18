@@ -14,7 +14,7 @@ namespace DrNuDownloader.Tests.Scrapers
         private readonly Mock<IWebRequestWrapper> _webRequestWrapperMock;
         private readonly Mock<IJsonConvertWrapper> _jsonConvertWrapperMock;
 
-        private readonly IScraper<Resource> _resourceScraper;
+        private readonly IResourceScraper _resourceScraper;
 
         public ResourceScraperTests()
         {

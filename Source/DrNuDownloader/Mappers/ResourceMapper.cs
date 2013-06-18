@@ -5,7 +5,9 @@ using DrNuDownloader.Scrapers.Json;
 
 namespace DrNuDownloader.Mappers
 {
-    public class ResourceMapper : IMapper<Resource, IProgram>
+    public interface IResourceMapper : IMapper<Resource, IProgram> { }
+
+    public class ResourceMapper : IResourceMapper
     {
         private readonly Program.Factory _programFactory;
 

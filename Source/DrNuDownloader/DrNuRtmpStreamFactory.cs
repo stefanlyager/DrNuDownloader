@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using DrNuDownloader.Clients;
 using DrNuDownloader.Scrapers;
 using Rtmp;
 using Rtmp.LibRtmp;

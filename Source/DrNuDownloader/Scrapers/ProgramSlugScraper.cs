@@ -5,35 +5,40 @@ using DrNuDownloader.Wrappers;
 
 namespace DrNuDownloader.Scrapers
 {
-    public class ProgramScraper : IScraper<Uri>
+    public interface IProgramSlugScraper : IScraper<Uri, Slug> { }
+
+    public class ProgramSlugScraper : IProgramSlugScraper
     {
         private readonly IWebRequestWrapper _webRequestWrapper;
 
-        public ProgramScraper(IWebRequestWrapper webRequestWrapper)
+        public ProgramSlugScraper(IWebRequestWrapper webRequestWrapper)
         {
             if (webRequestWrapper == null) throw new ArgumentNullException("webRequestWrapper");
 
             _webRequestWrapper = webRequestWrapper;
         }
 
-        public Uri Scrape(Uri programUri)
+        public Slug Scrape(Uri programUri)
         {
             if (programUri == null) throw new ArgumentNullException("programUri");
 
             var request = _webRequestWrapper.CreateHttp(programUri);
             var response = request.GetResponse();
 
-            var streamReader = new StreamReader(response.GetResponseStream());
-            var html = streamReader.ReadToEnd();
+            string html;
+            using (var streamReader = new StreamReader(response.GetResponseStream()))
+            {
+                html = streamReader.ReadToEnd();
+            }
 
-            var regex = new Regex("resource:\\s*\"(?<uri>.*)\"");
+            var regex = new Regex("programSerieSlug:\\s*\"(?<slug>.*)\"");
             var match = regex.Match(html);
             if (!match.Success)
             {
-                throw new ScraperException("Unable to find resource.");
+                throw new ScraperException("Unable to find programSerieSlug.");
             }
 
-            return new Uri(match.Groups["uri"].Value);
+            return match.Groups["slug"].Value;
         }
     }
 }

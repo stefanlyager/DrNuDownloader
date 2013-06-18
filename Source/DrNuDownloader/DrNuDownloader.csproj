@@ -71,13 +71,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Scrapers\IScraper.cs" />
     <Compile Include="Scrapers\Json\Converters\AssetConverter.cs" />
     <Compile Include="Scrapers\Json\IAsset.cs" />
     <Compile Include="Scrapers\Json\Data.cs" />
     <Compile Include="Scrapers\Json\VideoResourceAsset.cs" />
     <Compile Include="DrNuClient.cs" />
-    <Compile Include="Clients\EpisodeClient.cs" />
-    <Compile Include="Clients\EpisodeListClient.cs" />
     <Compile Include="DrNuRtmpStreamFactory.cs" />
     <Compile Include="FileNameSanitizer.cs" />
     <Compile Include="Mappers\IMapper.cs">
@@ -86,17 +85,17 @@
     <Compile Include="Mappers\ResourceMapper.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Scrapers\ProgramUriScraper.cs" />
     <Compile Include="Scrapers\ScraperException.cs" />
     <Compile Include="Scrapers\Json\Link.cs" />
     <Compile Include="Scrapers\Json\Resource.cs" />
-    <Compile Include="Clients\ProgramClient.cs" />
-    <Compile Include="Scrapers\ProgramScraper.cs" />
+    <Compile Include="Scrapers\ResourceUriScraper.cs" />
+    <Compile Include="Scrapers\ProgramSlugScraper.cs" />
+    <Compile Include="Scrapers\Slug.cs" />
     <Compile Include="Wrappers\FileWrapper.cs" />
     <Compile Include="Modules\DrNuModule.cs" />
-    <Compile Include="Scrapers\IScraper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Clients\ResourceClient.cs" />
     <Compile Include="Scrapers\ResourceScraper.cs" />
     <Compile Include="Wrappers\JsonConvertWrapper.cs" />
     <Compile Include="Wrappers\WebRequestWrapper.cs" />

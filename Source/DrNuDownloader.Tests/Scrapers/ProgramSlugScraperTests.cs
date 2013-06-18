@@ -9,37 +9,37 @@ using Xunit;
 
 namespace DrNuDownloader.Tests.Scrapers
 {
-    public class ProgramScraperTests
+    public class ProgramSlugScraperTests
     {
         private readonly Mock<IWebRequestWrapper> _webRequestWrapperMock;
 
-        private readonly IScraper<Uri> _programScraper;
+        private readonly IProgramSlugScraper _programSlugScraper;
 
-        public ProgramScraperTests()
+        public ProgramSlugScraperTests()
         {
             // Mock dependencies.
             _webRequestWrapperMock = new Mock<IWebRequestWrapper>();
 
             // System under test.
-            _programScraper = new ProgramScraper(_webRequestWrapperMock.Object);
+            _programSlugScraper = new ProgramSlugScraper(_webRequestWrapperMock.Object);
         }
 
         [Fact]
         public void Constructor_NullWebRequestWrapper_ThrowsArgumentNullException()
         {
             // Act and assert.
-            Assert.Throws<ArgumentNullException>(() => new ProgramScraper(null));
+            Assert.Throws<ArgumentNullException>(() => new ProgramSlugScraper(null));
         }
 
         [Fact]
         public void Scrape_NullProgramUri_ThrowsArgumentNullException()
         {
             // Act and assert.
-            Assert.Throws<ArgumentNullException>(() => _programScraper.Scrape(null));
+            Assert.Throws<ArgumentNullException>(() => _programSlugScraper.Scrape(null));
         }
 
         [Fact]
-        public void Scrape_ResourceUriNotFound_ThrowsScraperException()
+        public void Scrape_ProgramSlugNotFound_ThrowsScraperException()
         {
             // Arrange
             var webResponseMock = new Mock<WebResponse>();
@@ -55,14 +55,14 @@ namespace DrNuDownloader.Tests.Scrapers
                                   .Returns(httpWebRequestMock.Object);
 
             // Act and assert.
-            Assert.Throws<ScraperException>(() => _programScraper.Scrape(programUri));
+            Assert.Throws<ScraperException>(() => _programSlugScraper.Scrape(programUri));
         }
 
         [Fact]
-        public void Scrape_ValidProgramUri_ReturnsResourceUri()
+        public void Scrape_ValidProgramUri_ReturnsSlug()
         {
             // Arrange
-            var resource = Encoding.UTF8.GetBytes("resource: \"http://www.resource-uri.dk\"");
+            var resource = Encoding.UTF8.GetBytes("programSerieSlug: \"slug\"");
 
             var webResponseMock = new Mock<WebResponse>();
             webResponseMock.Setup(wr => wr.GetResponseStream())
@@ -77,11 +77,11 @@ namespace DrNuDownloader.Tests.Scrapers
                                   .Returns(httpWebRequestMock.Object);
 
             // Act
-            var resourceUri = _programScraper.Scrape(programUri);
+            var slug = _programSlugScraper.Scrape(programUri);
 
             // Assert
-            Assert.NotNull(resourceUri);
-            Assert.Equal(new Uri("http://www.resource-uri.dk"), resourceUri);
+            Assert.NotNull(slug);
+            Assert.Equal("slug", slug);
         }
     }
 }

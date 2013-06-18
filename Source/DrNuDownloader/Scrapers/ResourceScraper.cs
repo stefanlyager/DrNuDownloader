@@ -5,7 +5,9 @@ using DrNuDownloader.Wrappers;
 
 namespace DrNuDownloader.Scrapers
 {
-    public class ResourceScraper : IScraper<Resource>
+    public interface IResourceScraper : IScraper<Uri, Resource> { }
+
+    public class ResourceScraper : IResourceScraper
     {
         private readonly IWebRequestWrapper _webRequestWrapper;
         private readonly IJsonConvertWrapper _jsonConvertWrapper;
