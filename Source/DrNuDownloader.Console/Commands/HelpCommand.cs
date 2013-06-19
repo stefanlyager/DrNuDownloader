@@ -4,7 +4,9 @@ using Args.Help;
 
 namespace DrNuDownloader.Console.Commands
 {
-    public class HelpCommand : ICommand
+    public interface IHelpCommand : ICommand { }
+
+    public class HelpCommand : BaseCommand, IHelpCommand
     {
         private readonly IModelBindingDefinition<Arguments> _modelBindingDefinition;
 
@@ -15,8 +17,10 @@ namespace DrNuDownloader.Console.Commands
             _modelBindingDefinition = modelBindingDefinition;
         }
 
-        public void Execute()
+        public override void Execute()
         {
+            base.Execute();
+
             var helpProvider = new HelpProvider();
             var modelHelp = helpProvider.GenerateModelHelp(_modelBindingDefinition);
 
