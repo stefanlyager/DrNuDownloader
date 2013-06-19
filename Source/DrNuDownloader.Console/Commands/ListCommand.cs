@@ -4,7 +4,7 @@ namespace DrNuDownloader.Console.Commands
 {
     public interface IListCommand : ICommand { }
 
-    public class ListCommand : IListCommand
+    public class ListCommand : BaseCommand, IListCommand
     {
         public delegate IListCommand Factory(Uri listUri);
 
@@ -20,8 +20,13 @@ namespace DrNuDownloader.Console.Commands
             _listUri = listUri;
         }
 
-        public void Execute()
+        public override void Execute()
         {
+            base.Execute();
+
+            System.Console.WriteLine("Videos found at {0}:", _listUri);
+            System.Console.WriteLine();
+
             var episodeUris = _drNuClient.GetProgramUris(_listUri);
             foreach (var uri in episodeUris)
             {

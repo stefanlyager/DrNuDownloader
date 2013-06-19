@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Arguments.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Commands\BaseCommand.cs" />
     <Compile Include="Commands\CommandFactory.cs" />
     <Compile Include="Commands\DownloadCommand.cs" />
     <Compile Include="Commands\HelpCommand.cs" />

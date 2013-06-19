@@ -6,7 +6,7 @@ namespace DrNuDownloader.Console.Commands
 {
     public interface IDownloadCommand : ICommand { }
 
-    public class DownloadCommand : IDownloadCommand
+    public class DownloadCommand : BaseCommand, IDownloadCommand
     {
         public delegate IDownloadCommand Factory(Uri downloadUri);
 
@@ -25,12 +25,9 @@ namespace DrNuDownloader.Console.Commands
             _downloadUri = downloadUri;
         }
 
-        public void Execute()
+        public override void Execute()
         {
-            System.Console.CursorVisible = false;
-            System.Console.WriteLine("DR NU Downloader");
-            System.Console.WriteLine("Copyright (c) 2012 Stefan Lyager");
-            System.Console.WriteLine();
+            base.Execute();
 
             var program = _drNuClient.GetProgram(_downloadUri);
             if (!string.IsNullOrWhiteSpace(program.Title))
