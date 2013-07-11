@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A4E2E1B0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrNuDownloader.Wpf", "DrNuDownloader.Wpf\DrNuDownloader.Wpf.csproj", "{9C025B8D-182A-4946-ACE8-DFBC370AF9AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flv", "Flv\Flv.csproj", "{E5785A63-EF0C-4C26-88C4-6BB81FC195A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,12 @@ Global
 		{9C025B8D-182A-4946-ACE8-DFBC370AF9AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C025B8D-182A-4946-ACE8-DFBC370AF9AD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9C025B8D-182A-4946-ACE8-DFBC370AF9AD}.Release|x86.ActiveCfg = Release|Any CPU
+		{E5785A63-EF0C-4C26-88C4-6BB81FC195A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5785A63-EF0C-4C26-88C4-6BB81FC195A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5785A63-EF0C-4C26-88C4-6BB81FC195A9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E5785A63-EF0C-4C26-88C4-6BB81FC195A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5785A63-EF0C-4C26-88C4-6BB81FC195A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5785A63-EF0C-4C26-88C4-6BB81FC195A9}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
