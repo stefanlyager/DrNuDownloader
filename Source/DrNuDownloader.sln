@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrNuDownloader.Wpf", "DrNuD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flv", "Flv\Flv.csproj", "{E5785A63-EF0C-4C26-88C4-6BB81FC195A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flv.Tests", "Flv.Tests\Flv.Tests.csproj", "{B9397307-68E9-44FF-B844-8784D5239406}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,11 +69,18 @@ Global
 		{E5785A63-EF0C-4C26-88C4-6BB81FC195A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5785A63-EF0C-4C26-88C4-6BB81FC195A9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E5785A63-EF0C-4C26-88C4-6BB81FC195A9}.Release|x86.ActiveCfg = Release|Any CPU
+		{B9397307-68E9-44FF-B844-8784D5239406}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9397307-68E9-44FF-B844-8784D5239406}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9397307-68E9-44FF-B844-8784D5239406}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B9397307-68E9-44FF-B844-8784D5239406}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9397307-68E9-44FF-B844-8784D5239406}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9397307-68E9-44FF-B844-8784D5239406}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8B17D8A1-2680-407B-9C5F-53ADEF8E79AB} = {A4E2E1B0-B3A8-4679-A27E-92783F3B0A9A}
+		{B9397307-68E9-44FF-B844-8784D5239406} = {A4E2E1B0-B3A8-4679-A27E-92783F3B0A9A}
 	EndGlobalSection
 EndGlobal
