@@ -22,12 +22,12 @@ namespace Flv
 
         public UInt24 GetPayloadSize()
         {
-            return new UInt24(Bytes.Skip(1).Take(3).Reverse().ToArray());
+            return new UInt24(Bytes.Skip(1).Take(3), Endianness.BigEndian);
         }
 
         public UInt24 GetLowerTimestamp()
         {
-            return new UInt24(Bytes.Skip(4).Take(3).Reverse().ToArray());
+            return new UInt24(Bytes.Skip(4).Take(3), Endianness.BigEndian);
         }
 
         public byte GetUpperTimestamp()
@@ -37,7 +37,7 @@ namespace Flv
 
         public UInt24 GetStreamId()
         {
-            return new UInt24(Bytes.Skip(8).Take(3).Reverse().ToArray());
+            return new UInt24(Bytes.Skip(8).Take(3), Endianness.BigEndian);
         }
 
         public byte[] GetPayload()

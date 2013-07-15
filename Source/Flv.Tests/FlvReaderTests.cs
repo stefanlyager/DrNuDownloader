@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Xunit;
 
 namespace Flv.Tests
@@ -16,7 +18,12 @@ namespace Flv.Tests
 
         private IFlvReader CreateFlvReader(int streamLength)
         {
-            var memoryStream = new MemoryStream(new byte[streamLength]);
+            return CreateFlvReader(new byte[streamLength]);
+        }
+
+        private IFlvReader CreateFlvReader(byte[] bytes)
+        {
+            var memoryStream = new MemoryStream(bytes);
             return new FlvReader(memoryStream);
         }
 
@@ -87,6 +94,41 @@ namespace Flv.Tests
 
             // Assert
             Assert.NotNull(backpointer);
+        }
+
+        [Fact]
+        public void ReadTag_HeaderNotReadYet_ThrowsInvalidOperationException()
+        {
+            // Act and assert
+            Assert.Throws<InvalidOperationException>(() => _flvReader.ReadTag());
+        }
+
+        [Fact]
+        public void ReadTag_ReachedEndOfStream_ThrowsInvalidOperationException()
+        {
+            // Arrange
+            _flvReader.ReadHeader();
+
+            // Act and assert.
+            Assert.Throws<InvalidOperationException>(() => _flvReader.ReadTag());
+        }
+
+        [Fact]
+        public void ReadTag_AfterHeaderIsRead_ReturnsTag()
+        {
+            // Arrange
+            var bytes = Enumerable.Repeat((byte)0, 27).ToList();
+            var payloadSize = new UInt24(10);
+            bytes.InsertRange(10, payloadSize.ToByteArray(Endianness.BigEndian));
+
+            _flvReader = CreateFlvReader(bytes.ToArray());
+            _flvReader.ReadHeader();
+
+            // Act
+            var tag = _flvReader.ReadTag();
+
+            // Assert
+            Assert.NotNull(tag);
         }
     }
 }

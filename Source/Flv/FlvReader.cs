@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 namespace Flv
 {
@@ -56,7 +57,29 @@ namespace Flv
 
         public Tag ReadTag()
         {
-            throw new NotImplementedException();
+            if (_header == null)
+            {
+                throw new InvalidOperationException("Header must be read before the first tag can be read.");
+            }
+
+            var bytes = _binaryReader.ReadBytes(4);
+            if (bytes.Length != 4)
+            {
+                throw new InvalidOperationException(string.Format("Tag consists of at least 11 bytes, but only {0} bytes were read from Stream.", bytes.Length));
+            }
+
+            var payloadSize = new UInt24(bytes.Skip(1).Take(3), Endianness.BigEndian);
+
+            var numberOfAdditionalBytesToRead = 7 + (int)payloadSize.Value;
+            var additionalBytes = _binaryReader.ReadBytes(numberOfAdditionalBytesToRead);
+            if (additionalBytes.Length != numberOfAdditionalBytesToRead)
+            {
+                throw new InvalidOperationException(string.Format("Tag consists of {0} bytes, but only {1} bytes were read from Stream.",
+                                                                  bytes.Length + numberOfAdditionalBytesToRead,
+                                                                  bytes.Length + additionalBytes.Length));
+            }
+            
+            return new Tag(bytes.Concat(additionalBytes).ToArray());
         }
 
         public void Dispose()
