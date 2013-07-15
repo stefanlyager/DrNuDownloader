@@ -40,7 +40,18 @@ namespace Flv
 
         public Backpointer ReadBackpointer()
         {
-            throw new NotImplementedException();
+            if (_header == null)
+            {
+                throw new InvalidOperationException("Header must be read before the first backpoint can be read.");
+            }
+
+            var bytes = _binaryReader.ReadBytes(4);
+            if (bytes.Length != 4)
+            {
+                throw new InvalidOperationException(string.Format("Backpointer consists of 4 bytes, but only {0} bytes were read from Stream.", bytes.Length));
+            }
+
+            return new Backpointer(bytes);
         }
 
         public Tag ReadTag()

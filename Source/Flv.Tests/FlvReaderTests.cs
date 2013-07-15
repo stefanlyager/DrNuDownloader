@@ -10,11 +10,14 @@ namespace Flv.Tests
 
         public FlvReaderTests()
         {
-            // Create dependency.
-            var memoryStream = new MemoryStream(new byte[9]);
-
             // System under test.
-            _flvReader = new FlvReader(memoryStream);
+            _flvReader = CreateFlvReader(9);
+        }
+
+        private IFlvReader CreateFlvReader(int streamLength)
+        {
+            var memoryStream = new MemoryStream(new byte[streamLength]);
+            return new FlvReader(memoryStream);
         }
 
         [Fact]
@@ -53,6 +56,37 @@ namespace Flv.Tests
             
             // Assert
             Assert.NotNull(header);
+        }
+
+        [Fact]
+        public void ReadBackpointer_HeaderNotReadYet_ThrowsInvalidOperationException()
+        {
+            // Act and assert.
+            Assert.Throws<InvalidOperationException>(() => _flvReader.ReadBackpointer());
+        }
+
+        [Fact]
+        public void ReadBackpointer_ReachedEndOfStream_ThrowsInvalidOperationException()
+        {
+            // Arrange
+            _flvReader.ReadHeader();
+
+            // Act
+            Assert.Throws<InvalidOperationException>(() => _flvReader.ReadBackpointer());
+        }
+
+        [Fact]
+        public void ReadBackpointer_AfterHeaderIsRead_ReturnsBackpointer()
+        {
+            // Arrange
+            _flvReader = CreateFlvReader(13);
+            _flvReader.ReadHeader();
+
+            // Act
+            var backpointer = _flvReader.ReadBackpointer();
+
+            // Assert
+            Assert.NotNull(backpointer);
         }
     }
 }
