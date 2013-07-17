@@ -31,7 +31,7 @@ namespace Flv
             var bytesArray = bytes.ToArray();
             if (bytesArray.Length != 3) throw new ArgumentException("UInt24 should consist of exactly 3 bytes.", "bytes");
 
-            _bytes = ConvertToLittleEndian(bytesArray, endianness);
+            _bytes = ConvertConditional(bytesArray, endianness);
         }
 
         public UInt24(byte[] bytes, Endianness endianness)
@@ -39,7 +39,7 @@ namespace Flv
             if (bytes == null) throw new ArgumentNullException("bytes");
             if (bytes.Length != 3) throw new ArgumentException("UInt24 should consist of exactly 3 bytes.", "bytes");
 
-            _bytes = ConvertToLittleEndian(bytes, endianness);
+            _bytes = ConvertConditional(bytes, endianness);
         }
 
         public UInt24(uint value)
@@ -52,10 +52,10 @@ namespace Flv
 
         public byte[] ToByteArray(Endianness endianness)
         {
-            return ConvertToLittleEndian(_bytes, endianness);
+            return ConvertConditional(_bytes, endianness);
         }
 
-        private static byte[] ConvertToLittleEndian(byte[] bytes, Endianness endianness)
+        private static byte[] ConvertConditional(byte[] bytes, Endianness endianness)
         {
             return endianness == Endianness.LittleEndian ? bytes :
                                                            bytes.Reverse().ToArray();

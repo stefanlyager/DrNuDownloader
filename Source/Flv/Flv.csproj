@@ -42,6 +42,7 @@
     <Compile Include="Backpointer.cs" />
     <Compile Include="Endianness.cs" />
     <Compile Include="FlvReader.cs" />
+    <Compile Include="FlvReaderState.cs" />
     <Compile Include="FlvWriter.cs" />
     <Compile Include="Header.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

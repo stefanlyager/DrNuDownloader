@@ -1,30 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+using Flv.Tests.ObjectMothers;
 using Xunit;
 
 namespace Flv.Tests
 {
     public class FlvReaderTests
     {
-        private IFlvReader _flvReader;
+        private readonly FlvReaderObjectMother _flvReaderObjectMother;
 
         public FlvReaderTests()
         {
-            // System under test.
-            _flvReader = CreateFlvReader(9);
-        }
-
-        private IFlvReader CreateFlvReader(int streamLength)
-        {
-            return CreateFlvReader(new byte[streamLength]);
-        }
-
-        private IFlvReader CreateFlvReader(byte[] bytes)
-        {
-            var memoryStream = new MemoryStream(bytes);
-            return new FlvReader(memoryStream);
+            _flvReaderObjectMother = new FlvReaderObjectMother();
         }
 
         [Fact]
@@ -35,97 +21,134 @@ namespace Flv.Tests
         }
 
         [Fact]
-        public void ReadHeader_LessThanNineBytesInStream_ThrowsInvalidOperationException()
+        public void ReadHeader_ReachedEndOfStream_ThrowsInvalidOperationException()
         {
             // Arrange
-            var memoryStream = new MemoryStream(new byte[8]);
-            _flvReader = new FlvReader(memoryStream);
+            var flvReader = _flvReaderObjectMother.CreateEmptyFlvReader();
 
             // Act and assert.
-            Assert.Throws<InvalidOperationException>(() => _flvReader.ReadHeader());
+            Assert.Throws<InvalidOperationException>(() => flvReader.ReadHeader());
         }
 
         [Fact]
-        public void ReadHeader_HeaderAlreadyRead_ThrowsInvalidOperationException()
+        public void ReadHeader_WhenStateIsBeforeHeader_ReturnsHeader()
         {
             // Arrange
-            _flvReader.ReadHeader();
+            var flvReader = _flvReaderObjectMother.CreateFlvReaderWithHeader();
 
-            // Act and assert.
-            Assert.Throws<InvalidOperationException>(() => _flvReader.ReadHeader());
-        }
-
-        [Fact]
-        public void ReadHeader_HeaderNotReadYet_ReturnsHeader()
-        {
             // Act
-            var header = _flvReader.ReadHeader();
-            
+            var header = flvReader.ReadHeader();
+
             // Assert
             Assert.NotNull(header);
         }
 
         [Fact]
-        public void ReadBackpointer_HeaderNotReadYet_ThrowsInvalidOperationException()
+        public void ReadHeader_WhenStateIsBeforeBackpointer_ThrowsInvalidOperationException()
         {
+            // Arrange
+            var flvReader = _flvReaderObjectMother.CreateFlvReaderWithBackpointer();
+
             // Act and assert.
-            Assert.Throws<InvalidOperationException>(() => _flvReader.ReadBackpointer());
+            Assert.Throws<InvalidOperationException>(() => flvReader.ReadHeader());
+        }
+
+        [Fact]
+        public void ReadHeader_WhenStateIsBeforeTag_ThrowsInvalidOperationException()
+        {
+            // Arrange
+            var flvReader = _flvReaderObjectMother.CreateFlvReaderWithTag();
+
+            // Act and assert.
+            Assert.Throws<InvalidOperationException>(() => flvReader.ReadHeader());
         }
 
         [Fact]
         public void ReadBackpointer_ReachedEndOfStream_ThrowsInvalidOperationException()
         {
             // Arrange
-            _flvReader.ReadHeader();
+            var flvReader = _flvReaderObjectMother.CreateEmptyFlvReader();
+            flvReader.MoveToBeforeBackpointerState();
 
-            // Act
-            Assert.Throws<InvalidOperationException>(() => _flvReader.ReadBackpointer());
+            // Act and assert.
+            Assert.Throws<InvalidOperationException>(() => flvReader.ReadBackpointer());
         }
 
         [Fact]
-        public void ReadBackpointer_AfterHeaderIsRead_ReturnsBackpointer()
+        public void ReadBackpointer_WhenStateIsBeforeHeader_ThrowsInvalidOperationException()
         {
             // Arrange
-            _flvReader = CreateFlvReader(13);
-            _flvReader.ReadHeader();
+            var flvReader = _flvReaderObjectMother.CreateFlvReaderWithHeader();
+
+            // Act and assert.
+            Assert.Throws<InvalidOperationException>(() => flvReader.ReadBackpointer());
+        }
+
+        [Fact]
+        public void ReadBackpointer_WhenStateIsBeforeBackpointer_ReturnsBackpointer()
+        {
+            // Arrange
+            var flvReader = _flvReaderObjectMother.CreateFlvReaderWithBackpointer();
 
             // Act
-            var backpointer = _flvReader.ReadBackpointer();
+            var backpointer = flvReader.ReadBackpointer();
 
             // Assert
             Assert.NotNull(backpointer);
         }
 
         [Fact]
-        public void ReadTag_HeaderNotReadYet_ThrowsInvalidOperationException()
-        {
-            // Act and assert
-            Assert.Throws<InvalidOperationException>(() => _flvReader.ReadTag());
-        }
-
-        [Fact]
-        public void ReadTag_ReachedEndOfStream_ThrowsInvalidOperationException()
+        public void ReadBackpointer_WhenStateIsBeforeTag_ThrowsInvalidOperationException()
         {
             // Arrange
-            _flvReader.ReadHeader();
+            var flvReader = _flvReaderObjectMother.CreateFlvReaderWithTag();
 
             // Act and assert.
-            Assert.Throws<InvalidOperationException>(() => _flvReader.ReadTag());
+            Assert.Throws<InvalidOperationException>(() => flvReader.ReadBackpointer());
         }
 
         [Fact]
-        public void ReadTag_AfterHeaderIsRead_ReturnsTag()
+        public void ReadTag_ReachedEndOfStream_ReturnsNull()
         {
             // Arrange
-            var bytes = Enumerable.Repeat((byte)0, 27).ToList();
-            var payloadSize = new UInt24(10);
-            bytes.InsertRange(10, payloadSize.ToByteArray(Endianness.BigEndian));
-
-            _flvReader = CreateFlvReader(bytes.ToArray());
-            _flvReader.ReadHeader();
+            var flvReader = _flvReaderObjectMother.CreateEmptyFlvReader();
+            flvReader.MoveToBeforeTagState();
 
             // Act
-            var tag = _flvReader.ReadTag();
+            var tag = flvReader.ReadTag();
+
+            // Assert
+            Assert.Null(tag);
+        }
+
+        [Fact]
+        public void ReadTag_WhenStateIsBeforeHeader_ThrowsInvalidOperationException()
+        {
+            // Arrange
+            var flvReader = _flvReaderObjectMother.CreateFlvReaderWithHeader();
+
+            // Act and assert.
+            Assert.Throws<InvalidOperationException>(() => flvReader.ReadTag());
+        }
+
+        [Fact]
+        public void ReadTag_WhenStateIsBeforeBackpointer_ThrowsInvalidOperationException()
+        {
+            // Arrange
+            var flvReader = _flvReaderObjectMother.CreateFlvReaderWithBackpointer();
+
+            // Act and assert.
+            Assert.Throws<InvalidOperationException>(() => flvReader.ReadTag());
+        }
+
+        [Fact]
+        public void ReadTag_WhenStateIsBeforeTag_ReturnsTag()
+        {
+            // Arrange
+            var flvReader = _flvReaderObjectMother.CreateFlvReaderWithTag();
+
+            // Act
+            var tag = flvReader.ReadTag();
 
             // Assert
             Assert.NotNull(tag);
