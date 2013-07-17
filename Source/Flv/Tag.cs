@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Flv
 {
-    public class Tag
+    public class Tag : IFlvPart
     {
         public byte[] Bytes { get; private set; }
 
@@ -43,6 +43,11 @@ namespace Flv
         public byte[] GetPayload()
         {
             return Bytes.Skip(11).ToArray();
+        }
+
+        public byte[] ToByteArray()
+        {
+            return Bytes;
         }
     }
 }

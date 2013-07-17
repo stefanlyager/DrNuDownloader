@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Flv
 {
-    public class Header
+    public class Header : IFlvPart
     {
         public byte[] Bytes { get; private set; }
 

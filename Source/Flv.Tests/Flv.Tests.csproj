@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FlvReaderTests.cs" />
+    <Compile Include="FlvWriterTests.cs" />
     <Compile Include="ObjectMothers\FlvReaderObjectMother.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

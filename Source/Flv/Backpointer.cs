@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Flv
 {
-    public class Backpointer
+    public class Backpointer : IFlvPart
     {
         public byte[] Bytes { get; private set; }
 
@@ -18,6 +18,11 @@ namespace Flv
         public uint GetValue()
         {
             return BitConverter.ToUInt32(Bytes.Take(4).Reverse().ToArray(), 0);
+        }
+
+        public byte[] ToByteArray()
+        {
+            return Bytes;
         }
     }
 }

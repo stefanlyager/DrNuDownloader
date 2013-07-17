@@ -3,30 +3,35 @@ using System.IO;
 
 namespace Flv
 {
-    public class FlvWriter
+    public interface IFlvWriter : IDisposable
     {
-        private readonly Stream _stream;
+        void Write<T>(T flvPart) where T : IFlvPart;
+    }
+
+    public class FlvWriter : IFlvWriter
+    {
+        private readonly BinaryWriter _binaryWriter;
 
         public FlvWriter(Stream stream)
         {
             if (stream == null) throw new ArgumentNullException("stream");
 
-            _stream = stream;
+            _binaryWriter = new BinaryWriter(stream);
         }
 
-        public void WriteHeader(Header header)
+        public void Write<T>(T flvPart) where T : IFlvPart
         {
-            throw new NotImplementedException();
+            if (flvPart == null) throw new ArgumentNullException("flvPart");
+
+            _binaryWriter.Write(flvPart.ToByteArray());
         }
 
-        public void WriteBackpointer(Backpointer backpointer)
+        public void Dispose()
         {
-            throw new NotImplementedException();
-        }
-
-        public void WriteTag(Tag tag)
-        {
-            throw new NotImplementedException();
+            if (_binaryWriter != null)
+            {
+                _binaryWriter.Dispose();
+            }
         }
     }
 }

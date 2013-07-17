@@ -45,6 +45,7 @@
     <Compile Include="FlvReaderState.cs" />
     <Compile Include="FlvWriter.cs" />
     <Compile Include="Header.cs" />
+    <Compile Include="IFlvPart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="UInt24.cs" />
