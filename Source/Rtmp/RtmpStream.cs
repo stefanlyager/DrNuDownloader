@@ -88,6 +88,8 @@ namespace Rtmp
         public event EventHandler<DurationEventArgs> Duration;
         public event EventHandler<ElapsedEventArgs> Elapsed;
 
+        protected RtmpStream() { }
+
         public RtmpStream(ILibRtmpWrapper libRtmpWrapper, IUriData uriData)
         {
             if (libRtmpWrapper == null) throw new ArgumentNullException("libRtmpWrapper");

@@ -6,6 +6,7 @@ namespace Flv
     public interface IFlvWriter : IDisposable
     {
         void Write<T>(T flvPart) where T : IFlvPart;
+        void Close();
     }
 
     public class FlvWriter : IFlvWriter
@@ -24,6 +25,11 @@ namespace Flv
             if (flvPart == null) throw new ArgumentNullException("flvPart");
 
             _binaryWriter.Write(flvPart.ToByteArray());
+        }
+
+        public void Close()
+        {
+            _binaryWriter.Close();
         }
 
         public void Dispose()

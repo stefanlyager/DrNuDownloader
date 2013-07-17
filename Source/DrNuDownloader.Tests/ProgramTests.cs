@@ -1,7 +1,5 @@
 ﻿using System;
-using System.IO;
 using Moq;
-using Rtmp;
 using Xunit;
 
 namespace DrNuDownloader.Tests
@@ -70,21 +68,6 @@ namespace DrNuDownloader.Tests
         {
             // Act and assert.
             Assert.Throws<ArgumentNullException>(() => _program.Download(null));
-        }
-
-        [Fact]
-        public void Download_ValidPath_CopiesRtmpStreamToFileStream()
-        {
-            // Arrange
-            var rtmpStreamMock = new Mock<IRtmpStream>();
-            _drNuRtmpStreamFactoryMock.Setup(dnrsf => dnrsf.CreateDrNuRtmpStream(It.IsAny<Uri>()))
-                                      .Returns(rtmpStreamMock.Object);
-
-            // Act
-            _program.Download(@"C:\ValidPath\Program.flv");
-
-            // Assert
-            rtmpStreamMock.Verify(rs => rs.CopyTo(It.IsAny<FileStream>()), Times.Once());
         }
     }
 }

@@ -105,6 +105,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Flv\Flv.csproj">
+      <Project>{E5785A63-EF0C-4C26-88C4-6BB81FC195A9}</Project>
+      <Name>Flv</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Rtmp\Rtmp.csproj">
       <Project>{DA11BF28-5803-40AF-86F2-AB5ABF1931FC}</Project>
       <Name>Rtmp</Name>

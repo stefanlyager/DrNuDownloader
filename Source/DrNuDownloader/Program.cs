@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using Flv;
 using Rtmp;
 
 namespace DrNuDownloader
@@ -57,9 +59,14 @@ namespace DrNuDownloader
                 drNuRtmpStream.Duration += (sender, args) => OnDuration(args);
                 drNuRtmpStream.Elapsed += (sender, args) => OnElapsed(args);
 
-                using (var fileStream = _fileWrapper.Create(path))
+                using (var flvReader = new FlvReader(drNuRtmpStream))
+                using (var flvWriter = new FlvWriter(_fileWrapper.Create(path)))
                 {
-                    drNuRtmpStream.CopyTo(fileStream);
+                    IFlvPart flvPart;
+                    while ((flvPart = flvReader.Read()) != null)
+                    {
+                        flvWriter.Write(flvPart);
+                    }
                 }
             }
         }

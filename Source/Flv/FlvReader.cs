@@ -6,15 +6,34 @@ namespace Flv
 {
     public interface IFlvReader : IDisposable
     {
+        bool CanReadHeader { get; }
+        bool CanReadBackpointer { get; }
+        bool CanReadTag { get; }
         Header ReadHeader();
         Backpointer ReadBackpointer();
         Tag ReadTag();
+        IFlvPart Read();
     }
 
     public class FlvReader : IFlvReader
     {
         private readonly BinaryReader _binaryReader;
         private IFlvReaderState _flvReaderState;
+
+        public bool CanReadHeader
+        {
+            get { return _flvReaderState.CanReadHeader; }
+        }
+
+        public bool CanReadBackpointer
+        {
+            get { return _flvReaderState.CanReadBackpointer; }
+        }
+
+        public bool CanReadTag
+        {
+            get { return _flvReaderState.CanReadTag; }
+        }
 
         public FlvReader(Stream stream)
         {
@@ -37,6 +56,11 @@ namespace Flv
         internal void MoveToBeforeTagState()
         {
             _flvReaderState = new BeforeTagState(this);
+        }
+
+        public IFlvPart Read()
+        {
+            return _flvReaderState.Read();
         }
 
         public Header ReadHeader()
@@ -64,8 +88,28 @@ namespace Flv
 
         private class BeforeHeaderState : FlvReaderState
         {
+            public override bool CanReadHeader
+            {
+                get { return true; }
+            }
+
+            public override bool CanReadBackpointer
+            {
+                get { return false; }
+            }
+
+            public override bool CanReadTag
+            {
+                get { return false; }
+            }
+
             public BeforeHeaderState(FlvReader flvReader) : base(flvReader)
             {
+            }
+
+            public override IFlvPart Read()
+            {
+                return ReadHeader();
             }
 
             public override Header ReadHeader()
@@ -91,10 +135,79 @@ namespace Flv
             }
         }
 
+        private class BeforeBackpointerState : FlvReaderState
+        {
+            public override bool CanReadHeader
+            {
+                get { return false; }
+            }
+
+            public override bool CanReadBackpointer
+            {
+                get { return true; }
+            }
+
+            public override bool CanReadTag
+            {
+                get { return false; }
+            }
+
+            public BeforeBackpointerState(FlvReader flvReader) : base(flvReader)
+            {
+            }
+
+            public override IFlvPart Read()
+            {
+                return ReadBackpointer();
+            }
+
+            public override Header ReadHeader()
+            {
+                throw new InvalidOperationException("Header has already been read.");
+            }
+
+            public override Backpointer ReadBackpointer()
+            {
+                var bytes = FlvReader._binaryReader.ReadBytes(4);
+                if (bytes.Length != 4)
+                {
+                    throw new InvalidOperationException(string.Format("Backpointer consists of 4 bytes, but only {0} bytes were read from Stream.", bytes.Length));
+                }
+
+                FlvReader.MoveToBeforeTagState();
+                return new Backpointer(bytes);
+            }
+
+            public override Tag ReadTag()
+            {
+                throw new InvalidOperationException("Backpointer must be read before reading tag.");
+            }
+        }
+
         private class BeforeTagState : FlvReaderState
         {
+            public override bool CanReadHeader
+            {
+                get { return false; }
+            }
+
+            public override bool CanReadBackpointer
+            {
+                get { return false; }
+            }
+
+            public override bool CanReadTag
+            {
+                get { return true; }
+            }
+
             public BeforeTagState(FlvReader flvReader) : base(flvReader)
             {
+            }
+
+            public override IFlvPart Read()
+            {
+                return ReadTag();
             }
 
             public override Header ReadHeader()
@@ -133,35 +246,6 @@ namespace Flv
 
                 FlvReader.MoveToBeforeBackpointerState();
                 return new Tag(bytes.Concat(additionalBytes).ToArray());
-            }
-        }
-
-        private class BeforeBackpointerState : FlvReaderState
-        {
-            public BeforeBackpointerState(FlvReader flvReader) : base(flvReader)
-            {
-            }
-
-            public override Header ReadHeader()
-            {
-                throw new InvalidOperationException("Header has already been read.");
-            }
-
-            public override Backpointer ReadBackpointer()
-            {
-                var bytes = FlvReader._binaryReader.ReadBytes(4);
-                if (bytes.Length != 4)
-                {
-                    throw new InvalidOperationException(string.Format("Backpointer consists of 4 bytes, but only {0} bytes were read from Stream.", bytes.Length));
-                }
-
-                FlvReader.MoveToBeforeTagState();
-                return new Backpointer(bytes);
-            }
-
-            public override Tag ReadTag()
-            {
-                throw new InvalidOperationException("Backpointer must be read before reading tag.");
             }
         }
     }
