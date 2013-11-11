@@ -1,40 +1,77 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Flat UI Free</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta charset="utf-8">
+        <title>DR NU Downloader</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="css/flat-ui.css" rel="stylesheet">
+        <link rel="shortcut icon" href="images/favicon.ico">
+        <!--[if lt IE 9]>
+          <script src="js/html5shiv.js"></script>
+        <![endif]-->
+        <style>
+            p {
+                font-size: 40px;
+                font-family: "Lato", Helvetica, Arial, sans-serif;
+                font-weight: 700;
+                line-height: 1.1;
+            }
+        </style>
+    </head>
+    <body class="impress-not-supported" style="background-color: #ecf0f1;">
+        <div id="impress">
+            <div id="step-1" class="step slide" data-x="-1000" data-y="-1500" style="width: 800px; height: 600px;">
+                <p>Vil du også gerne vide, hvordan man downloader TV-programmer fra DR NU?</p>
+            </div>
+            <div id="step-2" class="step slide" data-x="0" data-y="-1500" style="width: 800px;">
+                <p>Først skal du hente programmet <a href="#">DR NU Downloader</a>.</p>
+                <p>Klik på linket for at downloade det.</p>
+            </div>
+            <div id="step-3" class="step slide" data-x="1000" data-y="-1500" style="width: 800px;">
+                <p>Programmet er pakket (zippet) og skal pakkes ud, før det kan bruges.</p>
+                <p>Højreklik på filen og vælg "Extract All" for at pakke den ud.</p>
+                <img src="images/screenshots/extract-1.png" />
+            </div>
+            <div id="step-4" class="step slide" data-x="2000" data-y="-1500" style="width: 800px;">
+                <p>Vælg en mappe, som programmet skal placeres i, fx C:\DrNuDownloader.</p>
+                <img src="images/screenshots/extract-2.png" />
+            </div>
+            <div id="step-5" class="step slide" data-x="3000" data-y="-1500" style="width: 800px;">
+                <p>Tryk på Windows-tasten + R og tast "cmd" i vinduet for at åbne en kommandoprompt.</p>
+                <img src="images/screenshots/run.png" />
+            </div>
+            <div id="step-6" class="step slide" data-x="4000" data-y="-1500" style="width: 800px;">
+                <p>Skift til mappen, hvor du placerede programmet med følgende kommando:</p>
+                <img src="images/screenshots/command_prompt-1.png" />
+            </div>
+            <div id="step-7" class="step slide" data-x="5000" data-y="-1500" style="width: 800px;">
+                <p>Find det program på DR NU, som du gerne vil downloade, og kopier URL'en til programmet.</p>
+                <img src="images/screenshots/dr_nu.png" />
+            </div>
+            <div id="step-8" class="step slide" data-x="6000" data-y="-1500" style="width: 800px;">
+                <p>Gå tilbage til kommandoprompten og indtast kommandoen nedenfor.</p>
+                <p>Læg mærke til hvordan URL'en indgår i kommandoen.</p>
+                <img src="images/screenshots/command_prompt-2.png" />
+            </div>
+            <div id="step-9" class="step slide" data-x="7000" data-y="-1500" style="width: 800px;">
+                <p>Læn dig tilbage og vent, mens programmet downloades:</p>
+                <img src="images/screenshots/command_prompt-3.png" />
+            </div>
+        </div>
 
-    <!-- Loading Bootstrap -->
-    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+        <script src="js/jquery-1.8.3.min.js"></script>
+        <script src="js/jquery-ui-1.10.3.custom.min.js"></script>
+        <script src="js/jquery.ui.touch-punch.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/bootstrap-select.js"></script>
+        <script src="js/bootstrap-switch.js"></script>
+        <script src="js/flatui-checkbox.js"></script>
+        <script src="js/flatui-radio.js"></script>
+        <script src="js/jquery.tagsinput.js"></script>
+        <script src="js/jquery.placeholder.js"></script>
+        <script src="js/impress.js"></script>
 
-    <!-- Loading Flat UI -->
-    <link href="css/flat-ui.css" rel="stylesheet">
-
-    <link rel="shortcut icon" href="images/favicon.ico">
-
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
-    <!--[if lt IE 9]>
-      <script src="js/html5shiv.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="container">
-      Start doing your next awesomeness here.
-    </div>
-    <!-- /.container -->
-
-
-    <!-- Load JS here for greater good =============================-->
-    <script src="js/jquery-1.8.3.min.js"></script>
-    <script src="js/jquery-ui-1.10.3.custom.min.js"></script>
-    <script src="js/jquery.ui.touch-punch.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/bootstrap-select.js"></script>
-    <script src="js/bootstrap-switch.js"></script>
-    <script src="js/flatui-checkbox.js"></script>
-    <script src="js/flatui-radio.js"></script>
-    <script src="js/jquery.tagsinput.js"></script>
-    <script src="js/jquery.placeholder.js"></script>
-  </body>
+        <script>impress().init();</script>
+    </body>
 </html>
