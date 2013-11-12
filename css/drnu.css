@@ -1,3 +1,37 @@
+.box {
+    padding: 13px;
+    margin: 0 0 15px;
+    font-size: 13px;
+    line-height: 1.72222;
+    color: inherit;
+    background-color: #ffffff;
+    border: 2px solid #e7e9ec;
+    border-radius: 6px;
+}
+
+h1 {
+    margin: 5px;
+    font-size: 32px;
+    font-weight: 700;
+    display: inline;
+}
+
+.glyphicon {
+    font-size: 30px;
+}
+
+.bottom-right {
+    position: fixed;
+    bottom: 0;
+    right: 10px;
+}
+
+.top-left {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+}
+
 body {
     background-color: #ecf0f1;
 }
