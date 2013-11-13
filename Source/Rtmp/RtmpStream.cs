@@ -212,6 +212,11 @@ namespace Rtmp
 
         public override void Close()
         {
+            if (!_isOpen)
+            {
+                return;
+            }
+
             base.Close();
 
             if (_rtmp != IntPtr.Zero)
