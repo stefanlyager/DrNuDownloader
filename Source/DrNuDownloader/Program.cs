@@ -54,19 +54,17 @@ namespace DrNuDownloader
         {
             if (path == null) throw new ArgumentNullException("path");
 
-            using (var drNuRtmpStream = _drNuRtmpStreamFactory.CreateDrNuRtmpStream(RtmpUri))
-            {
-                drNuRtmpStream.Duration += (sender, args) => OnDuration(args);
-                drNuRtmpStream.Elapsed += (sender, args) => OnElapsed(args);
+            var drNuRtmpStream = _drNuRtmpStreamFactory.CreateDrNuRtmpStream(RtmpUri);
+            drNuRtmpStream.Duration += (sender, args) => OnDuration(args);
+            drNuRtmpStream.Elapsed += (sender, args) => OnElapsed(args);
 
-                using (var flvReader = new FlvReader(drNuRtmpStream))
-                using (var flvWriter = new FlvWriter(_fileWrapper.Create(path)))
+            using (var flvReader = new FlvReader(drNuRtmpStream))
+            using (var flvWriter = new FlvWriter(_fileWrapper.Create(path)))
+            {
+                IFlvPart flvPart;
+                while ((flvPart = flvReader.Read()) != null)
                 {
-                    IFlvPart flvPart;
-                    while ((flvPart = flvReader.Read()) != null)
-                    {
-                        flvWriter.Write(flvPart);
-                    }
+                    flvWriter.Write(flvPart);
                 }
             }
         }
