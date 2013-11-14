@@ -39,6 +39,32 @@ namespace DrNuDownloader.Tests.Scrapers
         }
 
         [Fact]
+        public void Scrape_RelativeUri_ThrowsArgumentException()
+        {
+            // Arrange
+            var relativeUri = new Uri("Relative URI", UriKind.Relative);
+
+            // Act and assert.
+            Assert.Throws<ArgumentException>(() => _resourceUriScraper.Scrape(relativeUri));
+        }
+
+        [Fact]
+        public void Scrape_WebExceptionIsThrown_ThrowsScraperException()
+        {
+            // Arrange
+            var httpWebRequestMock = new Mock<HttpWebRequest>();
+            httpWebRequestMock.Setup(hwr => hwr.GetResponse())
+                              .Throws<WebException>();
+            
+            var programUri = new Uri("http://www.program-uri.dk");
+            _webRequestWrapperMock.Setup(wrw => wrw.CreateHttp(programUri))
+                                  .Returns(httpWebRequestMock.Object);
+
+            // Act and assert
+            Assert.Throws<ScraperException>(() => _resourceUriScraper.Scrape(programUri));
+        }
+
+        [Fact]
         public void Scrape_ResourceUriNotFound_ThrowsScraperException()
         {
             // Arrange

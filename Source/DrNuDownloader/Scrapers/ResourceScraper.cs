@@ -24,6 +24,7 @@ namespace DrNuDownloader.Scrapers
         public Resource Scrape(Uri resourceUri)
         {
             if (resourceUri == null) throw new ArgumentNullException("resourceUri");
+            if (!resourceUri.IsAbsoluteUri) throw new ArgumentException("Only absolute URIs are supported.", "resourceUri");
 
             var request = _webRequestWrapper.CreateHttp(resourceUri);
             var response = request.GetResponse();

@@ -39,6 +39,16 @@ namespace DrNuDownloader.Tests.Scrapers
         }
 
         [Fact]
+        public void Scrape_RelativeUri_ThrowsArgumentException()
+        {
+            // Arrange
+            var relativeUri = new Uri("Relative URI", UriKind.Relative);
+
+            // Act and assert.
+            Assert.Throws<ArgumentException>(() => _programSlugScraper.Scrape(relativeUri));
+        }
+
+        [Fact]
         public void Scrape_ProgramSlugNotFound_ThrowsScraperException()
         {
             // Arrange

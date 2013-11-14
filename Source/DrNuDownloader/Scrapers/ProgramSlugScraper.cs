@@ -21,6 +21,7 @@ namespace DrNuDownloader.Scrapers
         public Slug Scrape(Uri programUri)
         {
             if (programUri == null) throw new ArgumentNullException("programUri");
+            if (!programUri.IsAbsoluteUri) throw new ArgumentException("Only absolute URIs are supported.", "programUri");
 
             var request = _webRequestWrapper.CreateHttp(programUri);
             var response = request.GetResponse();

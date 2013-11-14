@@ -29,12 +29,12 @@ namespace DrNuDownloader.Console.Commands
             try
             {
                 Arguments arguments = modelBindingDefinition.CreateAndBind(args);
-                if (arguments.ListUri != null)
+                if (arguments.ListUri != null && arguments.ListUri.IsAbsoluteUri)
                 {
                     return _listCommandFactory(arguments.ListUri);
                 }
 
-                if (arguments.DownloadUri != null)
+                if (arguments.DownloadUri != null && arguments.DownloadUri.IsAbsoluteUri)
                 {
                     return _downloadCommandFactory(arguments.DownloadUri);
                 }

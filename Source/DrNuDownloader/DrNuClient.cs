@@ -38,6 +38,7 @@ namespace DrNuDownloader
         public IProgram GetProgram(Uri programUri)
         {
             if (programUri == null) throw new ArgumentNullException("programUri");
+            if (!programUri.IsAbsoluteUri) throw new ArgumentException("Only absolute URIs are supported.", "programUri");
 
             var resourceUri = _resourceUriScraper.Scrape(programUri);
             var resource = _resourceScraper.Scrape(resourceUri);
@@ -47,6 +48,7 @@ namespace DrNuDownloader
         public IEnumerable<Uri> GetProgramUris(Uri programUri)
         {
             if (programUri == null) throw new ArgumentNullException("programUri");
+            if (!programUri.IsAbsoluteUri) throw new ArgumentException("Only absolute URIs are supported.", "programUri");
 
             var slug = _programSlugScraper.Scrape(programUri);
             return _programUriScraper.Scrape(slug);
