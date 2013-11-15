@@ -35,7 +35,7 @@ namespace DrNuDownloader.Console.Commands
                 var program = _drNuClient.GetProgram(_downloadUri);
                 if (!string.IsNullOrWhiteSpace(program.Title))
                 {
-                    System.Console.WriteLine("Downloading \"{0}\" from DR NU.", program.Title);
+                    System.Console.WriteLine("Henter \"{0}\" fra DR NU.", program.Title);
                     System.Console.WriteLine();
                 }
 
@@ -103,7 +103,7 @@ namespace DrNuDownloader.Console.Commands
 
             progressBarStringBuilder.AppendLine(string.Format(" ({0}%)", progressInPercent.ToString("##0.00", CultureInfo.InvariantCulture)));
             progressBarStringBuilder.AppendLine();
-            progressBarStringBuilder.Append(string.Format("{0} kB downloaded ({1} out of {2} total)",
+            progressBarStringBuilder.Append(string.Format("{0} kB downloaded ({1} ud af {2})",
                                                           Math.Floor(bytesDownloaded / 1024),
                                                           elapsed.ToString(@"hh\:mm\:ss"),
                                                           duration.ToString(@"hh\:mm\:ss")));

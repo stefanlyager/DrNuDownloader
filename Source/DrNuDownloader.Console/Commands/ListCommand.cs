@@ -24,7 +24,7 @@ namespace DrNuDownloader.Console.Commands
         {
             base.Execute();
 
-            System.Console.WriteLine("Videos found at {0}:", _listUri);
+            System.Console.WriteLine("Videoer fundet på {0}:", _listUri);
             System.Console.WriteLine();
 
             var episodeUris = _drNuClient.GetProgramUris(_listUri);

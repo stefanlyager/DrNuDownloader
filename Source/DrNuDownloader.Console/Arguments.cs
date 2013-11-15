@@ -4,15 +4,15 @@ using Args;
 
 namespace DrNuDownloader.Console
 {
-    [Description("Utility for downloading videos from DR NU (http://www.dr.dk/tv).")]
+    [Description("Værktøj til at downloade videoer fra DR NU (http://www.dr.dk/tv).")]
     public class Arguments
     {
         [ArgsMemberSwitch("l")]
-        [Description("List URLs of all videos found at this URL.")]
+        [Description("Viser URL'er på alle videoer, som blev fundet på denne URL.")]
         public Uri ListUri { get; set; }
 
         [ArgsMemberSwitch("d")]
-        [Description("Download episode from this URL.")]
+        [Description("Downloader video fra denne URL.")]
         public Uri DownloadUri { get; set; }
     }
 }
