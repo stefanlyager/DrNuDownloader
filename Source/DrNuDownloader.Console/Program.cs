@@ -11,8 +11,10 @@ namespace DrNuDownloader.Console
             bootstrapper.Initialize();
 
             var commandFactory = bootstrapper.Container.Resolve<ICommandFactory>();
-            ICommand command = commandFactory.CreateCommand(args);
-            command.Execute();
+            using (ICommand command = commandFactory.CreateCommand(args))
+            {
+                command.Execute();
+            }
         }
     }
 }

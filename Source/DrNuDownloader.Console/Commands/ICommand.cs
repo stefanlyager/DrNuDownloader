@@ -1,6 +1,8 @@
-﻿namespace DrNuDownloader.Console.Commands
+﻿using System;
+
+namespace DrNuDownloader.Console.Commands
 {
-    public interface ICommand
+    public interface ICommand : IDisposable
     {
         void Execute();
     }
