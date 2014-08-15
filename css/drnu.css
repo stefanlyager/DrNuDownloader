@@ -38,6 +38,13 @@ p {
     right: 10px;
 }
 
+.middle-left {
+	position: fixed;
+	top: 90px;
+	left: 10px;
+	width: 450px;
+}
+
 .top-left {
     position: fixed;
     top: 10px;
